@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouse.Inf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouse.Console", "src\BlaisePascal.SmartHouse.Console\BlaisePascal.SmartHouse.Console.csproj", "{EC7E250A-3C93-4E43-BCDC-313FF098CF9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouse.WPF", "BlaisePascal.SmartHouse.WPF\BlaisePascal.SmartHouse.WPF.csproj", "{A5861CB5-3D18-4972-B62C-AD1A7F2E096F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouser.WPF", "BlaisePascal.SmartHouser.WPF\BlaisePascal.SmartHouser.WPF.csproj", "{17108EA7-3E47-44CE-A4D3-3CD959F5A811}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +51,10 @@ Global
 		{EC7E250A-3C93-4E43-BCDC-313FF098CF9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC7E250A-3C93-4E43-BCDC-313FF098CF9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC7E250A-3C93-4E43-BCDC-313FF098CF9B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5861CB5-3D18-4972-B62C-AD1A7F2E096F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5861CB5-3D18-4972-B62C-AD1A7F2E096F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5861CB5-3D18-4972-B62C-AD1A7F2E096F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5861CB5-3D18-4972-B62C-AD1A7F2E096F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17108EA7-3E47-44CE-A4D3-3CD959F5A811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17108EA7-3E47-44CE-A4D3-3CD959F5A811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17108EA7-3E47-44CE-A4D3-3CD959F5A811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17108EA7-3E47-44CE-A4D3-3CD959F5A811}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,7 +65,7 @@ Global
 		{583CBE24-1390-4903-8741-9C3821039B30} = {6C83A596-D32D-B35F-00DD-F0C99B673980}
 		{FC92B27A-3B1C-437C-93E3-CAA4901F64FD} = {6C83A596-D32D-B35F-00DD-F0C99B673980}
 		{EC7E250A-3C93-4E43-BCDC-313FF098CF9B} = {6C83A596-D32D-B35F-00DD-F0C99B673980}
-		{A5861CB5-3D18-4972-B62C-AD1A7F2E096F} = {6C83A596-D32D-B35F-00DD-F0C99B673980}
+		{17108EA7-3E47-44CE-A4D3-3CD959F5A811} = {6C83A596-D32D-B35F-00DD-F0C99B673980}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6573FBAB-D430-4A3F-8CA7-58AC8ACD7A56}
