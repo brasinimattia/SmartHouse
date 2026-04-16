@@ -25,6 +25,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouse.Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouser.WPF", "BlaisePascal.SmartHouser.WPF\BlaisePascal.SmartHouser.WPF.csproj", "{17108EA7-3E47-44CE-A4D3-3CD959F5A811}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{D5393B68-82F6-4CEA-95BA-200DB3DD36D7}"
+	ProjectSection(SolutionItems) = preProject
+		LampJson.json = LampJson.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
