@@ -13,7 +13,7 @@ namespace BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lightning.
 {
     public class JsonLampRepository : ILampRepository
     {
-        private readonly string _filePath = "lamps.json";
+        private readonly string _filePath = "LampsJson.json";
 
         public JsonLampRepository()
         {
@@ -21,7 +21,7 @@ namespace BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lightning.
             var dataFolder = Path.Combine(solutionRoot, "data");
             Directory.CreateDirectory(dataFolder);
 
-            _filePath = Path.Combine(dataFolder, "lamps.json");
+            _filePath = Path.Combine(dataFolder, "LampsJson.json");
 
             if (!File.Exists(_filePath))
             {
