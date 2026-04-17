@@ -24,6 +24,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouse.Console", "src\BlaisePascal.SmartHouse.Console\BlaisePascal.SmartHouse.Console.csproj", "{EC7E250A-3C93-4E43-BCDC-313FF098CF9B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{D5393B68-82F6-4CEA-95BA-200DB3DD36D7}"
+	ProjectSection(SolutionItems) = preProject
+		data\Lamp.json = data\Lamp.json
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouse.WPF", "src\BlaisePascal.SmartHouse.WPF\BlaisePascal.SmartHouse.WPF.csproj", "{832B92E9-88D9-410A-ABF7-43694DD9AD02}"
 EndProject
