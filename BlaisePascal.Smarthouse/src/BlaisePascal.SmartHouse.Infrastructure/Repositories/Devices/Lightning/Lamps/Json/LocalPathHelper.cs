@@ -19,7 +19,6 @@ namespace BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lightning.
 
             if (dir == null)
                 throw new Exception("Solution root not found");
-6767676767676767676767676767676767676
             return dir.FullName;
         }
     }
