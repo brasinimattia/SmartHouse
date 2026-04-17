@@ -9,13 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialDesignColors" Version="5.3.1" />
     <PackageReference Include="MaterialDesignThemes" Version="5.3.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\BlaisePascal.SmartHouse.Application\BlaisePascal.SmartHouse.Application.csproj" />
-    <ProjectReference Include="..\src\BlaisePascal.SmartHouse.Domain\BlaisePascal.SmartHouse.Domain.csproj" />
-    <ProjectReference Include="..\src\BlaisePascal.SmartHouse.Infrastructure\BlaisePascal.SmartHouse.Infrastructure.csproj" />
+    <ProjectReference Include="..\BlaisePascal.SmartHouse.Application\BlaisePascal.SmartHouse.Application.csproj" />
+    <ProjectReference Include="..\BlaisePascal.SmartHouse.Domain\BlaisePascal.SmartHouse.Domain.csproj" />
+    <ProjectReference Include="..\BlaisePascal.SmartHouse.Infrastructure\BlaisePascal.SmartHouse.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

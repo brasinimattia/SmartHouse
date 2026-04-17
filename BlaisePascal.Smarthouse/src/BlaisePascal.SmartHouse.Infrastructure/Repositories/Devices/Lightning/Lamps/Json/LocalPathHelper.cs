@@ -12,7 +12,7 @@ namespace BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lightning.
         {
             var dir = new DirectoryInfo(AppContext.BaseDirectory);
 
-            while (dir != null && !Directory.Exists(Path.Combine(dir.FullName, ".git")))
+            while (dir != null && !Directory.Exists(Path.Combine(dir.FullName)))
             {
                 dir = dir.Parent;
             }

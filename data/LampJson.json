@@ -1,0 +1,18 @@
+[
+  {
+    "Name": "Ciao",
+    "Status": "ON",
+    "Brightness": 59,
+    "Id": "acdafa98-1e90-44eb-9a02-86ed673a7d4f",
+    "CreatedAtUtc": "2026-04-17T08:07:51.178431+02:00",
+    "LastModifiedAtUtc": "2026-04-17T08:07:51.201068+02:00"
+  },
+  {
+    "Name": "lamp2",
+    "Status": "ON",
+    "Brightness": 35,
+    "Id": "09618b71-ef01-4f6a-84cb-f09861456793",
+    "CreatedAtUtc": "2026-04-17T08:09:48.6899391+02:00",
+    "LastModifiedAtUtc": "2026-04-17T08:09:48.7110179+02:00"
+  }
+]

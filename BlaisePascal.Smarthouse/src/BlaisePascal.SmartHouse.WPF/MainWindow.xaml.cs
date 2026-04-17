@@ -2,7 +2,7 @@
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Dto;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Queries;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository;
-using BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lightning.Lamps.InMemory;
+using BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lightning.Lamps.Json;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +16,9 @@ using System.Windows.Shapes;
 
 namespace BlaisePascal.SmartHouse.WPF
 {
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
     public partial class MainWindow : Window
     {
         static ILampRepository _lampRepository;
@@ -25,7 +28,7 @@ namespace BlaisePascal.SmartHouse.WPF
         public MainWindow()
         {
             InitializeComponent();
-            _lampRepository = new InMemoryLampRepository();
+            _lampRepository = new JsonLampRepository();
             RefreshLampList();
         }
 
