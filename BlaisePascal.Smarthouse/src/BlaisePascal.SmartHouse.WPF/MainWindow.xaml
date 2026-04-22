@@ -2,120 +2,57 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Lamp Manager" Height="600" Width="900"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{materialDesign:MaterialDesignFont}">
+        Title="Smart Home Manager" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
 
-    <Grid Margin="20">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- LEFT SIDE: LAMP LIST -->
-        <materialDesign:Card Grid.Column="0" Padding="10" Margin="5" VerticalAlignment="Stretch">
-            <StackPanel>
-                <TextBlock Text="Lamps"
-                           FontSize="22"
-                           FontWeight="Bold"
-                           Margin="5"/>
+        <materialDesign:Card Grid.Column="0" Background="#1E1E1E" Foreground="White" UniformCornerRadius="0">
+            <StackPanel Margin="0,20,0,0">
 
-                <ListBox x:Name="LampList"
-                         Margin="5"
-                         Height="450"
-                         SelectionChanged="LampList_SelectionChanged">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <materialDesign:Card Margin="5" Padding="10" Width="150">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Name}"
-                                               FontSize="18"
-                                               FontWeight="Bold"/>
+                <TextBlock Text="Smart Home" 
+                           FontSize="24" 
+                           FontWeight="Bold" 
+                           Margin="20,10,20,30" 
+                           Foreground="#2196F3"/>
 
-                                    <TextBlock Text="{Binding Status}" 
-                                               Opacity="0.6"/>
+                <Button Content="Lamps" 
+                        Click="NavLamps_Click" 
+                        Style="{StaticResource MaterialDesignFlatLightBgButton}" 
+                        Height="50" 
+                        HorizontalContentAlignment="Left" 
+                        Padding="20,0"/>
 
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Intensity: " Opacity="0.6"/>
-                                        <TextBlock Text="{Binding Brightness}" Opacity="0.6"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </materialDesign:Card>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+                <Button Content="CCTV" 
+                        Click="NavCctv_Click" 
+                        Style="{StaticResource MaterialDesignFlatLightBgButton}" 
+                        Height="50" 
+                        HorizontalContentAlignment="Left" 
+                        Padding="20,0"/>
 
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel IsItemsHost="True" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                </ListBox>
+                <Button Content="Doors" 
+                        Click="NavDoors_Click" 
+                        Style="{StaticResource MaterialDesignFlatLightBgButton}" 
+                        Height="50" 
+                        HorizontalContentAlignment="Left" 
+                        Padding="20,0"/>
+
+                <Button Content="Air Conditioners" 
+                        Click="NavAirCon_Click" 
+                        Style="{StaticResource MaterialDesignFlatLightBgButton}" 
+                        Height="50" 
+                        HorizontalContentAlignment="Left" 
+                        Padding="20,0"/>
+
             </StackPanel>
         </materialDesign:Card>
 
-        <!-- RIGHT SIDE: CONTROLS -->
-        <StackPanel Grid.Column="1">
-
-            <!-- ADD NEW LAMP -->
-            <materialDesign:Card Margin="5" Padding="15">
-                <StackPanel>
-                    <TextBlock Text="New Lamp"
-                               FontSize="18"
-                               FontWeight="Bold"/>
-                    <TextBox x:Name="NewLampNameTextBox"
-                             materialDesign:HintAssist.Hint="Lamp Name"
-                             Margin="0,10,0,0"/>
-
-                    <TextBox x:Name="NewLampIntensityTextBox"
-                             materialDesign:HintAssist.Hint="Initial Intensity"
-                             Margin="0,10,0,10"/>
-
-                    <Button Content="Add Lamp"
-                            Click="Add_Click"
-                            Margin="0,10,0,0"
-                            Background="#1976D2"
-                            Foreground="White"/>
-                </StackPanel>
-            </materialDesign:Card>
-
-            <materialDesign:Card Margin="5" Padding="15">
-                <StackPanel>
-                    <TextBlock Text="Controls"
-                               FontSize="18"
-                               FontWeight="Bold"/>
-
-                    <Button Content="Switch ON"
-                            Click="On_Click"
-                            Margin="0,10,0,0"
-                            Background="#2196F3"
-                            Foreground="White"/>
-
-                    <Button Content="Switch OFF"
-                            Click="Off_Click"
-                            Margin="0,5,0,0"
-                            Background="#2196F3"
-                            Foreground="White"/>
-
-                    <TextBox x:Name="SetIntensityTextBox"
-                             materialDesign:HintAssist.Hint="Set Intensity"
-                             Margin="0,15,0,5"/>
-
-                    <Button Content="Apply Intensity"
-                            Click="ApplyIntensity_Click"
-                            Margin="0,5,0,0"
-                            Background="Green"
-                            Foreground="White"/>
-
-                    <Button Content="Remove Lamp"
-                            Click="Remove_Click"
-                            Margin="0,10,0,0"
-                            Background="#F44336"
-                            Foreground="White"/>
-                </StackPanel>
-            </materialDesign:Card>
-
-        </StackPanel>
+        <ContentControl x:Name="MainContentArea"
+                    Grid.Column="1"/>
     </Grid>
 </Window>
 
