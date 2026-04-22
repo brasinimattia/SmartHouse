@@ -5,8 +5,120 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BlaisePascal.SmartHouse.WPF.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{materialDesign:MaterialDesignFont}">
+
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- LEFT SIDE: LAMP LIST -->
+        <materialDesign:Card Grid.Column="0" Padding="10" Margin="5" VerticalAlignment="Stretch">
+            <StackPanel>
+                <TextBlock Text="Lamps"
+                           FontSize="22"
+                           FontWeight="Bold"
+                           Margin="5"/>
+
+                <ListBox x:Name="LampList"
+                         Margin="5"
+                         Height="450"
+                         SelectionChanged="LampList_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <materialDesign:Card Margin="5" Padding="10" Width="150">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}"
+                                               FontSize="18"
+                                               FontWeight="Bold"/>
+
+                                    <TextBlock Text="{Binding Status}" 
+                                               Opacity="0.6"/>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Intensity: " Opacity="0.6"/>
+                                        <TextBlock Text="{Binding Brightness}" Opacity="0.6"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+            </StackPanel>
+        </materialDesign:Card>
+
+        <!-- RIGHT SIDE: CONTROLS -->
+        <StackPanel Grid.Column="1">
+
+            <!-- ADD NEW LAMP -->
+            <materialDesign:Card Margin="5" Padding="15">
+                <StackPanel>
+                    <TextBlock Text="New Lamp"
+                               FontSize="18"
+                               FontWeight="Bold"/>
+                    <TextBox x:Name="NewLampNameTextBox"
+                             materialDesign:HintAssist.Hint="Lamp Name"
+                             Margin="0,10,0,0"/>
+
+                    <TextBox x:Name="NewLampIntensityTextBox"
+                             materialDesign:HintAssist.Hint="Initial Intensity"
+                             Margin="0,10,0,10"/>
+
+                    <Button Content="Add Lamp"
+                            Click="Add_Click"
+                            Margin="0,10,0,0"
+                            Background="#1976D2"
+                            Foreground="White"/>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <materialDesign:Card Margin="5" Padding="15">
+                <StackPanel>
+                    <TextBlock Text="Controls"
+                               FontSize="18"
+                               FontWeight="Bold"/>
+
+                    <Button Content="Switch ON"
+                            Click="On_Click"
+                            Margin="0,10,0,0"
+                            Background="#2196F3"
+                            Foreground="White"/>
+
+                    <Button Content="Switch OFF"
+                            Click="Off_Click"
+                            Margin="0,5,0,0"
+                            Background="#2196F3"
+                            Foreground="White"/>
+
+                    <TextBox x:Name="SetIntensityTextBox"
+                             materialDesign:HintAssist.Hint="Set Intensity"
+                             Margin="0,15,0,5"/>
+
+                    <Button Content="Apply Intensity"
+                            Click="ApplyIntensity_Click"
+                            Margin="0,5,0,0"
+                            Background="Green"
+                            Foreground="White"/>
+
+                    <Button Content="Remove Lamp"
+                            Click="Remove_Click"
+                            Margin="0,10,0,0"
+                            Background="#F44336"
+                            Foreground="White"/>
+                </StackPanel>
+            </materialDesign:Card>
+
+        </StackPanel>
     </Grid>
+
 </UserControl>
