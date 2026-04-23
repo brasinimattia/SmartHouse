@@ -115,6 +115,12 @@
                             Margin="0,10,0,0"
                             Background="#F44336"
                             Foreground="White"/>
+
+                    <Button Content="Sort Lamps"
+                            Click="Sort_Click"
+                            Margin="0,10,0,0"
+                            Background="Black"
+                            Foreground="White"/>
                 </StackPanel>
             </materialDesign:Card>
 

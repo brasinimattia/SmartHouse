@@ -6,5 +6,29 @@
     "Id": "a24568a6-c9c8-413b-a376-b9194481f817",
     "CreatedAtUtc": "2026-04-17T08:46:16.0030715+02:00",
     "LastModifiedAtUtc": "2026-04-17T08:46:16.023978+02:00"
+  },
+  {
+    "Name": "ciao",
+    "Status": "ON",
+    "Brightness": 78,
+    "Id": "50c056cb-f240-4fbd-83dc-5cb82c5fa7c9",
+    "CreatedAtUtc": "2026-04-23T13:31:12.6946085+02:00",
+    "LastModifiedAtUtc": "2026-04-23T13:31:12.7277398+02:00"
+  },
+  {
+    "Name": "Blu",
+    "Status": "OFF",
+    "Brightness": 1,
+    "Id": "6100e9f3-a9f8-4807-899f-f9b13a656fe7",
+    "CreatedAtUtc": "2026-04-23T13:32:35.5668731+02:00",
+    "LastModifiedAtUtc": "2026-04-23T13:32:35.5668805+02:00"
+  },
+  {
+    "Name": "Verde",
+    "Status": "OFF",
+    "Brightness": 1,
+    "Id": "becfbcda-d390-423c-8e96-8645fbb010c6",
+    "CreatedAtUtc": "2026-04-23T13:32:40.1094467+02:00",
+    "LastModifiedAtUtc": "2026-04-23T13:32:40.1094534+02:00"
   }
 ]

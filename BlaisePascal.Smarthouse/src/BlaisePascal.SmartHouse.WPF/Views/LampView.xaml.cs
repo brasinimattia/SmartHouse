@@ -156,6 +156,15 @@ namespace BlaisePascal.SmartHouse.WPF.Views
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void Sort_Click(object sender, RoutedEventArgs e) 
+        { 
+            var lamps = new GetAllLampsQuery(_lampRepository).Execute();
+            var sortedLamps = lamps.OrderBy(l => l.Name).ToList();
+            LampList.Items.Clear();
+            foreach (var lamp in sortedLamps)
+                LampList.Items.Add(lamp);
+        }
     }
 }
 
