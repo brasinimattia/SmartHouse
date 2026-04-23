@@ -11,7 +11,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <materialDesign:Card Grid.Column="0" Background="#1E1E1E" Foreground="White" UniformCornerRadius="0">
+        <materialDesign:Card Grid.Column="0" Background="Black" Foreground="White" UniformCornerRadius="0">
             <StackPanel Margin="0,20,0,0">
 
                 <TextBlock Text="Smart Home" 
@@ -25,6 +25,8 @@
                         Style="{StaticResource MaterialDesignFlatLightBgButton}" 
                         Height="50" 
                         HorizontalContentAlignment="Left" 
+                        Background="#2196F3"
+                        BorderBrush="Black"
                         Padding="20,0"/>
 
                 <Button Content="CCTV" 
@@ -32,6 +34,8 @@
                         Style="{StaticResource MaterialDesignFlatLightBgButton}" 
                         Height="50" 
                         HorizontalContentAlignment="Left" 
+                        Background="#2196F3"
+                        BorderBrush="Black"
                         Padding="20,0"/>
 
                 <Button Content="Doors" 
@@ -39,13 +43,18 @@
                         Style="{StaticResource MaterialDesignFlatLightBgButton}" 
                         Height="50" 
                         HorizontalContentAlignment="Left" 
-                        Padding="20,0"/>
+                        Padding="20,0"
+                        Background="#2196F3"
+                        BorderBrush="Black"
+                       />
 
                 <Button Content="Air Conditioners" 
                         Click="NavAirCon_Click" 
                         Style="{StaticResource MaterialDesignFlatLightBgButton}" 
                         Height="50" 
                         HorizontalContentAlignment="Left" 
+                        Background="#2196F3"
+                        BorderBrush="Black"
                         Padding="20,0"/>
 
             </StackPanel>
