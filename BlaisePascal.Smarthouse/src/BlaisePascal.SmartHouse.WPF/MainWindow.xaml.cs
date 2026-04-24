@@ -45,10 +45,5 @@ namespace BlaisePascal.SmartHouse.WPF
             MessageBox.Show("Door View non ancora implementata.", "Info");
         }
 
-        private void NavAirCon_Click(object sender, RoutedEventArgs e)
-        {
-            // MainContentArea.Content = new Views.AirConditionerView();
-            MessageBox.Show("Air Conditier View non ancora implementata.", "Info");
-        }
     }
 }

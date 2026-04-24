@@ -48,15 +48,6 @@
                         BorderBrush="Black"
                        />
 
-                <Button Content="Air Conditioners" 
-                        Click="NavAirCon_Click" 
-                        Style="{StaticResource MaterialDesignFlatLightBgButton}" 
-                        Height="50" 
-                        HorizontalContentAlignment="Left" 
-                        Background="#2196F3"
-                        BorderBrush="Black"
-                        Padding="20,0"/>
-
             </StackPanel>
         </materialDesign:Card>
 

@@ -165,6 +165,8 @@ namespace BlaisePascal.SmartHouse.WPF.Views
             foreach (var lamp in sortedLamps)
                 LampList.Items.Add(lamp);
         }
+
+
     }
 }
 
