@@ -139,12 +139,11 @@ namespace BlaisePascal.SmartHouse.WPF.Views
                     RefreshLampList();
                 }
             }
-            catch (Exception ex) 
-            { 
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error); 
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
 
         // REMOVE LAMP
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -162,10 +161,20 @@ namespace BlaisePascal.SmartHouse.WPF.Views
             }
         }
 
-        private void Sort_Click(object sender, RoutedEventArgs e) 
-        { 
+        // SORT LAMPS BY NAME
+        private void Sort_Click(object sender, RoutedEventArgs e)
+        {
             var lamps = new GetAllLampsQuery(_lampRepository).Execute();
             var sortedLamps = lamps.OrderBy(l => l.Name).ToList();
+            LampList.Items.Clear();
+            foreach (var lamp in sortedLamps)
+                LampList.Items.Add(lamp);
+        }
+
+        private void Sort_Click_ByIntensity(object sender, RoutedEventArgs e)
+        {
+            var lamps = new GetAllLampsQuery(_lampRepository).Execute();
+            var sortedLamps = lamps.OrderByDescending(l => l.Brightness).ToList();
             LampList.Items.Clear();
             foreach (var lamp in sortedLamps)
                 LampList.Items.Add(lamp);

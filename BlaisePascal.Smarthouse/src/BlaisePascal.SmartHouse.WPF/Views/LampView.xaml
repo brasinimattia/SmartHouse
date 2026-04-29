@@ -115,9 +115,10 @@
                     <Button Content="APPLY SETTINGS" Click="ApplyIntensity_Click" Style="{StaticResource MaterialDesignFlatMidBgButton}" Background="#5C6BC0" Margin="0,10"/>
 
                     <UniformGrid Columns="2" Margin="0,20,0,0">
-                        <Button Click="Sort_Click" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="#CFD8DC">
-                            <materialDesign:PackIcon Kind="SortAlphabeticalAscending" Foreground="#607D8B"/>
+                        <Button Click="Sort_Click" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="#CFD8DC" Content="Sort By Name">
+                            <!--<materialDesign:PackIcon Kind="SortAlphabeticalAscending" Foreground="#607D8B"/> -->
                         </Button>
+                        <Button Click="Sort_Click_ByIntensity" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="#CFD8DC" Content="Sort By Intensity"/>
                         <Button Click="Remove_Click" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#D32F2F" BorderBrush="#FFCDD2">
                             <materialDesign:PackIcon Kind="Delete"/>
                         </Button>
