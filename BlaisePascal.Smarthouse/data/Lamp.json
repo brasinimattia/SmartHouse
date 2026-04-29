@@ -21,14 +21,14 @@
     "Brightness": 1,
     "Id": "6100e9f3-a9f8-4807-899f-f9b13a656fe7",
     "CreatedAtUtc": "2026-04-23T13:32:35.5668731+02:00",
-    "LastModifiedAtUtc": "2026-04-23T13:32:35.5668805+02:00"
+    "LastModifiedAtUtc": "2026-04-29T10:30:55.334814+02:00"
   },
   {
     "Name": "Verde",
-    "Status": "OFF",
-    "Brightness": 1,
+    "Status": "ON",
+    "Brightness": 74,
     "Id": "becfbcda-d390-423c-8e96-8645fbb010c6",
     "CreatedAtUtc": "2026-04-23T13:32:40.1094467+02:00",
-    "LastModifiedAtUtc": "2026-04-23T13:32:40.1094534+02:00"
+    "LastModifiedAtUtc": "2026-04-29T10:28:49.0789135+02:00"
   }
 ]

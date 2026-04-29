@@ -3,135 +3,128 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BlaisePascal.SmartHouse.WPF.Views"
-             mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-             Background="{DynamicResource MaterialDesignPaper}"
-             FontFamily="{materialDesign:MaterialDesignFont}">
+             mc:Ignorable="d" d:DesignHeight="720" d:DesignWidth="1280">
 
-    <Grid Margin="20">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#F0F4F8" Offset="0.0" />
+                <GradientStop Color="#D9E2EC" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
 
-        <!-- LEFT SIDE: LAMP LIST -->
-        <materialDesign:Card Grid.Column="0" Padding="10" Margin="5" VerticalAlignment="Stretch">
-            <StackPanel>
-                <TextBlock Text="Lamps"
-                           FontSize="22"
-                           FontWeight="Bold"
-                           Margin="5"/>
+        <Grid Margin="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="400" />
+            </Grid.ColumnDefinitions>
 
-                <ListBox x:Name="LampList"
-                         Margin="5"
-                         Height="450"
-                         SelectionChanged="LampList_SelectionChanged">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <materialDesign:Card Margin="5" Padding="10" Width="150">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Name}"
-                                               FontSize="18"
-                                               FontWeight="Bold"/>
-
-                                    <TextBlock Text="{Binding Status}" 
-                                               Opacity="0.6"/>
-
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Intensity: " Opacity="0.6"/>
-                                        <TextBlock Text="{Binding Brightness}" Opacity="0.6"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </materialDesign:Card>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel IsItemsHost="True" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                </ListBox>
-            </StackPanel>
-        </materialDesign:Card>
-
-        <!-- RIGHT SIDE: CONTROLS -->
-        <StackPanel Grid.Column="1">
-
-            <!-- ADD NEW LAMP -->
-            <materialDesign:Card Margin="5" Padding="15">
-                <StackPanel>
-                    <TextBlock Text="New Lamp"
-                               FontSize="18"
-                               FontWeight="Bold"/>
-                    <TextBox x:Name="NewLampNameTextBox"
-                             materialDesign:HintAssist.Hint="Lamp Name"
-                             Margin="0,10,0,0"/>
-
-                    <TextBox x:Name="NewLampIntensityTextBox"
-                             materialDesign:HintAssist.Hint="Initial Intensity"
-                             Margin="0,10,0,10"/>
-
-                    <Button Content="Add Lamp"
-                            Click="Add_Click"
-                            Margin="0,10,0,0"
-                            Background="#1976D2"
-                            Foreground="White"/>
+            <DockPanel Grid.Column="0">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10,0,0,30">
+                    <materialDesign:PackIcon Kind="Lights" Width="35" Height="35" VerticalAlignment="Center" Foreground="#5C6BC0"/>
+                    <TextBlock Text="Lamp Manager" Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                               FontWeight="Bold" Foreground="#334E68" Margin="15,0,0,0" VerticalAlignment="Center"/>
                 </StackPanel>
-            </materialDesign:Card>
 
-            <materialDesign:Card Margin="5" Padding="15">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListBox x:Name="LampList" Background="Transparent" BorderThickness="0" SelectionChanged="LampList_SelectionChanged">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel HorizontalAlignment="Left" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Width="220" Height="160" Margin="10" Padding="20" CornerRadius="24" BorderThickness="2">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="#A6FFFFFF"/>
+                                            <Setter Property="BorderBrush" Value="#E6FFFFFF"/>
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect BlurRadius="20" ShadowDepth="4" Opacity="0.04" Color="#102A43"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Status}" Value="ON">
+                                                    <Setter Property="Background" Value="#CCFFFFFF"/>
+                                                    <Setter Property="BorderBrush" Value="#805C6BC0" />
+                                                    <Setter Property="Effect">
+                                                        <Setter.Value>
+                                                            <DropShadowEffect BlurRadius="35" ShadowDepth="0" Opacity="0.5" Color="#FFCA28"/>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <materialDesign:PackIcon Kind="Lightbulb" Width="28" Height="28">
+                                            <materialDesign:PackIcon.Style>
+                                                <Style TargetType="materialDesign:PackIcon">
+                                                    <Setter Property="Foreground" Value="#B0BEC5" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Status}" Value="ON">
+                                                            <Setter Property="Foreground" Value="#FFCA28" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </materialDesign:PackIcon.Style>
+                                        </materialDesign:PackIcon>
+                                        <TextBlock Grid.Row="1" Text="{Binding Name}" FontSize="20" FontWeight="SemiBold" Foreground="#37474F" VerticalAlignment="Center"/>
+                                        <StackPanel Grid.Row="2">
+                                            <Grid Margin="0,0,0,5">
+                                                <TextBlock Text="Brightness" FontSize="11" Foreground="#90A4AE" HorizontalAlignment="Left"/>
+                                                <TextBlock Text="{Binding Brightness, StringFormat={}{0}%}" FontSize="11" FontWeight="Bold" Foreground="#607D8B" HorizontalAlignment="Right"/>
+                                            </Grid>
+                                            <ProgressBar Value="{Binding Brightness}" Height="6" Foreground="#5C6BC0" Background="#33B0BEC5" BorderThickness="0"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
+            </DockPanel>
+
+            <Border Grid.Column="1" Background="#A6FFFFFF" CornerRadius="28" Padding="30" Margin="15,0,0,0">
                 <StackPanel>
-                    <TextBlock Text="Controls"
-                               FontSize="18"
-                               FontWeight="Bold"/>
+                    <TextBlock Text="Management" FontWeight="Bold" FontSize="20" Margin="0,0,0,20"/>
+                    <TextBox x:Name="NewLampNameTextBox" materialDesign:HintAssist.Hint="Device Name" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,0,15"/>
+                    <TextBox x:Name="NewLampIntensityTextBox" materialDesign:HintAssist.Hint="Intensity (0-100)" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,0,20"/>
+                    <Button Content="ADD DEVICE" Click="Add_Click" Background="#5C6BC0" materialDesign:ButtonAssist.CornerRadius="24" Height="48"/>
 
-                    <Button Content="Switch ON"
-                            Click="On_Click"
-                            Margin="0,10,0,0"
-                            Background="#2196F3"
-                            Foreground="White"/>
+                    <Separator Margin="0,30" Background="#20607D8B"/>
 
-                    <Button Content="Switch OFF"
-                            Click="Off_Click"
-                            Margin="0,5,0,0"
-                            Background="#2196F3"
-                            Foreground="White"/>
+                    <UniformGrid Columns="2" Margin="0,0,0,20">
+                        <Button Content="ON" Click="On_Click" Margin="0,0,5,0" Background="#5C6BC0"/>
+                        <Button Content="OFF" Click="Off_Click" Margin="5,0,0,0" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#5C6BC0"/>
+                    </UniformGrid>
 
-                    <TextBox x:Name="SetIntensityTextBox"
-                             materialDesign:HintAssist.Hint="Set Intensity"
-                             Margin="0,15,0,5"/>
+                    <DockPanel>
+                        <TextBlock Text="Brightness" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="BrightnessPercentageText" Text="0%" FontWeight="Bold" Foreground="#5C6BC0" HorizontalAlignment="Right"/>
+                    </DockPanel>
+                    <Slider x:Name="BrightnessSlider" Minimum="0" Maximum="100" ValueChanged="BrightnessSlider_ValueChanged" Foreground="LightSteelBlue" Margin="0,10"/>
+                    <Button Content="APPLY SETTINGS" Click="ApplyIntensity_Click" Style="{StaticResource MaterialDesignFlatMidBgButton}" Background="#5C6BC0" Margin="0,10"/>
 
-                    <Button Content="Apply Intensity"
-                            Click="ApplyIntensity_Click"
-                            Margin="0,5,0,0"
-                            Background="Green"
-                            Foreground="White"/>
-
-                    <Button Content="Remove Lamp"
-                            Click="Remove_Click"
-                            Margin="0,10,0,0"
-                            Background="#F44336"
-                            Foreground="White"/>
-
-                    <Button Content="Sort Lamps"
-                            Click="Sort_Click"
-                            Margin="0,10,0,0"
-                            Background="Black"
-                            Foreground="White"/>
-
-                    <Button Content="Sort Lamps"
-                            Click="Sort_Click"
-                            Margin="0,10,0,0"
-                            Background="Black"
-                            Foreground="White"
-                            Visibility="Hidden"/>
+                    <UniformGrid Columns="2" Margin="0,20,0,0">
+                        <Button Click="Sort_Click" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="#CFD8DC">
+                            <materialDesign:PackIcon Kind="SortAlphabeticalAscending" Foreground="#607D8B"/>
+                        </Button>
+                        <Button Click="Remove_Click" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#D32F2F" BorderBrush="#FFCDD2">
+                            <materialDesign:PackIcon Kind="Delete"/>
+                        </Button>
+                    </UniformGrid>
                 </StackPanel>
-            </materialDesign:Card>
-
-        </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
-
 </UserControl>
+

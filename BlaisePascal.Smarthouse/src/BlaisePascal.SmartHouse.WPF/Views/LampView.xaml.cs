@@ -50,6 +50,7 @@ namespace BlaisePascal.SmartHouse.WPF.Views
             }
         }
 
+
         private void LampList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index = LampList.SelectedIndex;
@@ -58,6 +59,13 @@ namespace BlaisePascal.SmartHouse.WPF.Views
             if (index >= 0 && index < lamps.Count)
                 SelectedLamp = lamps[index];
         }
+
+        //CHANGE BRIGHTNESS VIA SLIDER
+        private void BrightnessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (BrightnessPercentageText != null) BrightnessPercentageText.Text = $"{(int)e.NewValue}%";
+        }
+
 
         // ADD LAMP
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -125,21 +133,18 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         {
             try
             {
-                if (SelectedLamp == null) return;
-                if (!int.TryParse(SetIntensityTextBox.Text.Trim(), out int brightness))
+                if (SelectedLamp != null)
                 {
-                    MessageBox.Show("Invalid value. Enter a number between 0 and 100.");
-                    return;
+                    new ChangeBrightnessLampCommand(_lampRepository).Execute(SelectedLamp.Id, (int)BrightnessSlider.Value);
+                    RefreshLampList();
                 }
-                new ChangeBrightnessLampCommand(_lampRepository).Execute(SelectedLamp.Id, brightness);
-                SetIntensityTextBox.Clear();
-                RefreshLampList();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            catch (Exception ex) 
+            { 
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error); 
             }
         }
+
 
         // REMOVE LAMP
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -165,8 +170,6 @@ namespace BlaisePascal.SmartHouse.WPF.Views
             foreach (var lamp in sortedLamps)
                 LampList.Items.Add(lamp);
         }
-
-
     }
 }
 
