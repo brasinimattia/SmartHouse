@@ -119,10 +119,10 @@
                             <!--<materialDesign:PackIcon Kind="SortAlphabeticalAscending" Foreground="#607D8B"/> -->
                         </Button>
                         <Button Click="Sort_Click_ByIntensity" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="#CFD8DC" Content="Sort By Intensity"/>
-                        <Button Click="Remove_Click" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#D32F2F" BorderBrush="#FFCDD2">
-                            <materialDesign:PackIcon Kind="Delete"/>
-                        </Button>
                     </UniformGrid>
+                    <Button Click="Remove_Click" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#D32F2F" BorderBrush="#FFCDD2" >
+                        <materialDesign:PackIcon Kind="Delete"/>
+                    </Button>
                 </StackPanel>
             </Border>
         </Grid>
