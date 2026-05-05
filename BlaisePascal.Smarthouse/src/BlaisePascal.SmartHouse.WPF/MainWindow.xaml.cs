@@ -41,8 +41,8 @@ namespace BlaisePascal.SmartHouse.WPF
         }
         private void NavDoors_Click(object sender, RoutedEventArgs e)
         {
-            // MainContentArea.Content = new Views.DoorView();
-            MessageBox.Show("Door View non ancora implementata.", "Info");
+            MainContentArea.Content = new Views.DoorView();
+            //MessageBox.Show("Door View non ancora implementata.", "Info");
         }
 
     }

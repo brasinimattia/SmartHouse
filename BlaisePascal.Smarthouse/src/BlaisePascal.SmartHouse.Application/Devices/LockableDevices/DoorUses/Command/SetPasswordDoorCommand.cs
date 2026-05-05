@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command
 {
-    public class SetPassworDoorCommand
+    public class SetPasswordDoorCommand
     {
         private readonly IDoorRepository _doorRepository;
 
-        public SetPassworDoorCommand(IDoorRepository doorRepository)
+        public SetPasswordDoorCommand(IDoorRepository doorRepository)
         {
             _doorRepository = doorRepository;
         }

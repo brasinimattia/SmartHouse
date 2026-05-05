@@ -186,7 +186,7 @@ namespace BlaisePascal.SmartHouse.Consoles.Devices.LockableDevices.DoorControlle
                 string newkey = Console.ReadLine();
                 try
                 {
-                    new SetPassworDoorCommand(_repository).Execute(door.Id, key);
+                    new SetPasswordDoorCommand(_repository).Execute(door.Id, key);
                     Console.WriteLine("Password set!");
                 }
                 catch (ArgumentException Aex)
@@ -199,7 +199,7 @@ namespace BlaisePascal.SmartHouse.Consoles.Devices.LockableDevices.DoorControlle
                     Console.WriteLine($"Error: {ex.Message}");
                     return;
                 }
-                new SetPassworDoorCommand(_repository).Execute(door.Id, newkey);
+                new SetPasswordDoorCommand(_repository).Execute(door.Id, newkey);
             }
             else
             {
