@@ -1,0 +1,131 @@
+﻿<UserControl x:Class="BlaisePascal.SmartHouse.WPF.Views.CCTVView"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            mc:Ignorable="d" 
+            d:DesignHeight="700" d:DesignWidth="1000"
+            Background="White">
+
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="350" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="0,0,20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <TextBlock Text="📹" FontSize="28" Margin="0,0,10,0"/>
+                <TextBlock Text="CCTV Manager" FontSize="28" FontWeight="Bold" Foreground="#334E68"/>
+            </StackPanel>
+
+            <ListView x:Name="CctvList" Grid.Row="1" SelectionChanged="CctvList_SelectionChanged" 
+                     BorderBrush="Transparent" Background="#F0F4F8" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#F0F4F8" CornerRadius="5" Margin="5" Padding="15" Width="450"
+                               BorderBrush="#F0F4F8" BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Text="{Binding Name}" FontWeight="Bold" FontSize="18" Foreground="Black"/>
+
+                                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,10,0,0">
+                                    <TextBlock Text="{Binding Status}" Foreground="Gray" Margin="0,0,15,0"/>
+                                    <TextBlock Text="{Binding Mode}" Foreground="Gray" Margin="0,0,15,0"/>
+                                    <TextBlock Text="REC" Foreground="#334E68" FontWeight="Bold" Visibility="{Binding IsRecording, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,15,0"/>
+                                    <TextBlock Text="{Binding LockingStatus}" Foreground="Gray"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <Border Grid.Column="1" Background="White" CornerRadius="5" Padding="20" BorderBrush="#CCCCCC" BorderThickness="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock Text="Management" FontSize="22" FontWeight="Bold" Foreground="Black" Margin="0,0,0,20"/>
+
+                    <TextBox x:Name="NewCctvNameTextBox" Margin="0,0,0,10" Padding="8" 
+                            Background="White" Foreground="Black" BorderBrush="#CCCCCC" BorderThickness="1" 
+                            Text="Device Name" GotFocus="TextBox_GotFocus"/>
+                    <Button Content="ADD DEVICE" Click="Add_Click" 
+                           Background="#2196F3" Foreground="White" BorderThickness="0" Padding="10" Margin="0,0,0,20"/>
+
+                    <Separator Margin="0,0,0,20"/>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="ON" Click="On_Click" Background="#5C6BC0" Foreground="White" BorderThickness="0" Padding="8" Margin="0,0,5,0"/>
+                        <Button Grid.Column="1" Content="OFF" Click="Off_Click" Background="#5C6BC0" Foreground="White" BorderThickness="0" Padding="8" Margin="2.5,0,2.5,0"/>
+                        <Button Grid.Column="2" Content="TOGGLE" Click="Toggle_Click" Background="#5C6BC0" Foreground="White" BorderThickness="0" Padding="8" Margin="5,0,0,0"/>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Normal Mode" Click="NormalMode_Click" Background="#334E68" Foreground="White" BorderThickness="0" Padding="8" Margin="0,0,5,0"/>
+                        <Button Grid.Column="1" Content="Night Mode" Click="NightMode_Click" Background="#334E68" Foreground="White" BorderThickness="0" Padding="8" Margin="5,0,0,0"/>
+                    </Grid>
+
+                    <Separator Margin="0,0,0,20"/>
+
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="START REC" Click="StartRec_Click" Background="#78909C" Foreground="White" BorderThickness="0" Padding="8" Margin="0,0,5,0"/>
+                        <Button Grid.Column="1" Content="STOP REC" Click="StopRec_Click" Background="#37474F" Foreground="White" BorderThickness="0" Padding="8" Margin="5,0,0,0"/>
+                    </Grid>
+
+                    <Separator Margin="0,0,0,20"/>
+
+                    <TextBox x:Name="KeyTextBox" Margin="0,0,0,10" Padding="8" 
+                            Background="White" Foreground="Black" BorderBrush="#CCCCCC" BorderThickness="1" 
+                            Text="Enter Password/Key" GotFocus="TextBox_GotFocus"/>
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="UNLOCK" Click="Unlock_Click" Background="#78909C" Foreground="White" BorderThickness="0" Padding="8" Margin="0,0,5,0"/>
+                        <Button Grid.Column="1" Content="LOCK" Click="Lock_Click" Background="#37474F" Foreground="White" BorderThickness="0" Padding="8" Margin="5,0,0,0"/>
+                    </Grid>
+                    <Button Content="SET NEW PASSWORD" Click="SetPassword_Click" Background="#5C6BC0" Foreground="White" BorderThickness="0" Padding="8" Margin="0,0,0,20"/>
+
+                    <Separator Margin="0,0,0,20"/>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Sort By Name" Click="SortName_Click" Background="#E0E0E0" Foreground="Black" BorderThickness="0" Padding="8" Margin="0,0,5,0"/>
+                        <Button Grid.Column="1" Content="Sort By Status" Click="SortStatus_Click" Background="#E0E0E0" Foreground="Black" BorderThickness="0" Padding="8" Margin="5,0,0,0"/>
+                    </Grid>
+
+                    <Button Content="REMOVE DEVICE" Click="Remove_Click" Background="#F44336" Foreground="White" BorderThickness="0" Padding="10" Margin="0,10,0,0"/>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

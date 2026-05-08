@@ -37,13 +37,13 @@ namespace BlaisePascal.SmartHouse.WPF
         private void NavCctv_Click(object sender, RoutedEventArgs e)
         {
             // MainContentArea.Content = new Views.CctvView();
-            MessageBox.Show("CCTV View non ancora implementata.", "Info");
+            MainContentArea.Content = new Views.CCTVView();
         }
         private void NavDoors_Click(object sender, RoutedEventArgs e)
         {
             MainContentArea.Content = new Views.DoorView();
             //MessageBox.Show("Door View non ancora implementata.", "Info");
         }
-
     }
+    
 }
