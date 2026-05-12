@@ -1,5 +1,7 @@
-﻿using BlaisePascal.SmartHouse.Domain.Device;
+﻿using BlaisePascal.SmartHouse.Domain.abstraction.Errors;
+using BlaisePascal.SmartHouse.Domain.Device;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice;
+using BlaisePascal.SmartHouse.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,28 +40,42 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice
             Password = Password.Create(password);
         }
 
-        public void Open()
+        public Result Open()
         {
             OnValidator();
+            Result result;
             if (DoorStatus == DoorStatus.Closed && LockingStatus == LockingStatus.Unlocked)
+            {
+                result = Result.Success();
                 DoorStatus = DoorStatus.Open;
+            }
             else
-                throw new Exception("cannot open the door");
-            LastModifiedAtUtc = DateTime.Now;
+                result = Result.Failure(DoorErrors.CannotOpenDoor);
+            Touch();
+            return result;
 
         }
 
-        public void Close()
+        public Result Close()
         {
             OnValidator();
-            DoorStatus = DoorStatus.Closed;
-            LastModifiedAtUtc = DateTime.Now;
+            Result result;
+            if (!(DoorStatus == DoorStatus.Closed))
+            {
+                result = Result.Success();
+                DoorStatus = DoorStatus.Closed;
+            }
+            else
+                result = Result.Failure(DoorErrors.AlreadyClosed);
+            Touch();
+            return result;
         }
 
-        public void Lock(string key)
+        public Result Lock(string key)
         {
             OnValidator();
 
+            Result result;
             bool noPassword = !PasswordSetted;
             bool correctPassword = PasswordSetted && Password.Key == key;
 
@@ -67,35 +83,40 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice
                 DoorStatus == DoorStatus.Closed &&
                 (noPassword || correctPassword))
             {
+                result = Result.Success();
                 LockingStatus = LockingStatus.Locked;
             }
             else
             {
-                throw new Exception("cannot lock the door");
+                result = Result.Failure(DoorErrors.CannotLockDoor);
             }
 
-            LastModifiedAtUtc = DateTime.Now;
+            Touch();
+            return result;
         }
 
 
-        public void Unlock(string key)
+        public Result Unlock(string key)
         {
             OnValidator();
 
+            Result result;
             bool noPassword = !PasswordSetted;
             bool correctPassword = PasswordSetted && Password.Key == key;
 
             if (LockingStatus == LockingStatus.Locked &&
                 (noPassword || correctPassword))
             {
+                result = Result.Success();
                 LockingStatus = LockingStatus.Unlocked;
             }
             else
             {
-                throw new Exception("cannot unlock the door");
+                result = Result.Failure(DoorErrors.CannotUnlockDoor);
             }
 
-            LastModifiedAtUtc = DateTime.Now;
+            Touch();
+            return result;
         }
 
 
