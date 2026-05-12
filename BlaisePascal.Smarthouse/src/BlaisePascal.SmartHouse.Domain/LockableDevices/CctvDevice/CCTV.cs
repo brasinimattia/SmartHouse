@@ -38,7 +38,7 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice
         }
 
         //Methods
-        public override void TurnOn()
+        public override void SwitchOn()
         {
             if (Status == DeviceStatus.On)
                 throw new Exception("The CCTV is already on");
@@ -48,7 +48,7 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice
             LastModifiedAtUtc = DateTime.Now;
         }
 
-        public override void TurnOff()
+        public override void SwitchOff()
         {
             if (Status == DeviceStatus.Off)
                 throw new Exception("The CCTV is already off");

@@ -22,7 +22,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.TermostatDevices.AirCondit
             AirConditioner cond = _repository.GetById(id);
             if(cond != null)
             {
-                cond.TurnOff();
+                cond.SwitchOff();
                 _repository.Update(cond);
             }
         }

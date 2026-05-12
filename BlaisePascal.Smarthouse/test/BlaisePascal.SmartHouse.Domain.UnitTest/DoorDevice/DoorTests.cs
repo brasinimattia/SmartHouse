@@ -105,8 +105,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorDevice
         public void TurnOn_WhenStatusIsOff_ItChangesToOn()
         {
             Door door = new Door("Front Door");
-            door.TurnOff();
-            door.TurnOn();
+            door.SwitchOff();
+            door.SwitchOn();
             Assert.Equal(DeviceStatus.On, door.Status);
         }
 
@@ -114,7 +114,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorDevice
         public void TurnOff_WhenStatusIsOn_ItChangesToOff()
         {
             Door door = new Door("Front Door");
-            door.TurnOff();
+            door.SwitchOff();
             Assert.Equal(DeviceStatus.Off, door.Status);
         }
 

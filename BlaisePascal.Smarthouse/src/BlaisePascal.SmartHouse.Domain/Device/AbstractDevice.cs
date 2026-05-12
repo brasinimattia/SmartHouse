@@ -1,4 +1,7 @@
 ﻿using BlaisePascal.SmartHouse.Domain.abstraction;
+using BlaisePascal.SmartHouse.Domain.abstraction.Errors;
+using BlaisePascal.SmartHouse.Domain.abstraction.Events;
+using BlaisePascal.SmartHouse.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +11,8 @@ using System.Xml.Linq;
 
 namespace BlaisePascal.SmartHouse.Domain.Device
 {
-    public abstract class AbstractDevice : ISwitchable
+    public abstract class AbstractDevice :Entity, ISwitchable
     {
-        public Guid Id { get; protected set; }
         public Name Name { get; protected set; }
         public DeviceStatus Status { get; protected set; }
         public DateTime CreatedAtUtc { get; protected set; }
@@ -22,12 +24,12 @@ namespace BlaisePascal.SmartHouse.Domain.Device
             Name = Name.Create(name);
             Status = DeviceStatus.Off;
             CreatedAtUtc = DateTime.Now;
-            LastModifiedAtUtc = DateTime.Now;
+            Touch();
         }
         public AbstractDevice(Guid guid, string name)
         {
             CreatedAtUtc = DateTime.Now;
-            LastModifiedAtUtc = DateTime.Now;
+            Touch();
             Status = DeviceStatus.Off;
             Id = guid;
             Name = Name.Create(name);
@@ -43,6 +45,19 @@ namespace BlaisePascal.SmartHouse.Domain.Device
             LastModifiedAtUtc = modified;
         }
 
+        public virtual Result SwitchOn()
+        {
+            if (Status == DeviceStatus.On)
+                return Result.Failure(LampErrors.AlreadyOn);
+
+            Status = DeviceStatus.On;
+
+            Raise(new DeviceSwitchedOnEvent(Id));
+            Touch();
+
+            return Result.Success();
+        }
+
         //Methods
         public void OnValidator()
         {
@@ -53,21 +68,23 @@ namespace BlaisePascal.SmartHouse.Domain.Device
         public virtual void Toggle()
         {
             if (Status == DeviceStatus.On)
-                TurnOff();
+                SwitchOff();
             else
-                TurnOn();
-            LastModifiedAtUtc = DateTime.Now;
-        }
-        public virtual void TurnOn()
-        {
-            Status = DeviceStatus.On;
+                SwitchOn();
             LastModifiedAtUtc = DateTime.Now;
         }
 
-        public virtual void TurnOff()
+        public virtual Result SwitchOff()
         {
-            Status = DeviceStatus.Off;
-            LastModifiedAtUtc = DateTime.Now;
+            if (Status == DeviceStatus.On)
+                return Result.Failure(LampErrors.AlreadyOff);
+
+            Status = DeviceStatus.On;
+
+            Raise(new DeviceSwitchedOnEvent(Id));
+            Touch();
+
+            return Result.Success();
         }
 
         public virtual void SetNewName(string newName)
@@ -78,6 +95,11 @@ namespace BlaisePascal.SmartHouse.Domain.Device
             }
             Name = Name.Create(newName);
             LastModifiedAtUtc = DateTime.Now;
+        }
+
+        protected void Touch() 
+        {
+            LastModifiedAtUtc = DateTime.UtcNow;
         }
     }
 }

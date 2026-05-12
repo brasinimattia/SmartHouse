@@ -22,7 +22,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.C
             Lamp lamp = _lampRepository.GetById(id);
             if(lamp != null)
             {
-                lamp.TurnOff();
+                lamp.SwitchOff();
                 _lampRepository.Update(lamp);
             }
         }

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlaisePascal.SmartHouse.SharedKernel\BlaisePascal.SmartHouse.SharedKernel.csproj" />
+  </ItemGroup>
+
 </Project>

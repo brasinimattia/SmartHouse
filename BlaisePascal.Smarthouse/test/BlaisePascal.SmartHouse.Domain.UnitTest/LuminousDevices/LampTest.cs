@@ -37,7 +37,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LuminousDevices
         public void increaseBrightness_WhenBrightnessIsLessThanMax_ItIncreasesByOne()
         {
             Lamp lamp = new Lamp("a");
-            lamp.TurnOn();
+            lamp.SwitchOn();
             lamp.DecreaseBrightness();
             lamp.IncreaseBrightness();
             Assert.Equal(Brightness.Create(2), lamp.Brightness);
@@ -47,7 +47,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LuminousDevices
         public void increaseBrightness_WhenBrightnessIsMax_ItRemainsMax()
         {
             Lamp lamp = new Lamp("a");
-            lamp.TurnOn();
+            lamp.SwitchOn();
             lamp.IncreaseBrightness();
             Assert.Equal(Brightness.Create(2), lamp.Brightness);
         }
@@ -56,7 +56,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LuminousDevices
         public void decreaseBrightness_WhenBrightnessIsMoreThanMin_ItDecreasesByOne()
         {
             Lamp lamp = new Lamp("a");
-            lamp.TurnOn();
+            lamp.SwitchOn();
             lamp.IncreaseBrightness();
             lamp.DecreaseBrightness();
             Assert.Equal(Brightness.Create(1), lamp.Brightness);
@@ -66,7 +66,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LuminousDevices
         public void decreaseBrightness_WhenBrightnessIsMin_ItRemainsMin()
         {
             Lamp lamp = new Lamp("a");
-            lamp.TurnOn();
+            lamp.SwitchOn();
             for (int i = 0; i < 11; i++)
             {
                 lamp.DecreaseBrightness();
@@ -78,7 +78,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LuminousDevices
         public void ChangeBrightness_WhenTheParameterIsGreaterThan0AndLowerThan11_BrightnessChangesToParameter()
         {
             Lamp lamp = new Lamp("a");
-            lamp.TurnOn();
+            lamp.SwitchOn();
             lamp.ChangeBrightness(7);
             Assert.Equal(Brightness.Create(7), lamp.Brightness);
         }

@@ -17,7 +17,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatDevice
         {
             // Arrange
             Thermostat thermostat = new Thermostat("Living Room Thermostat");
-            thermostat.TurnOn();
+            thermostat.SwitchOn();
             int validTemperature = 25;
             // Act
             thermostat.SetTemperatureToReach(validTemperature);
@@ -29,7 +29,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatDevice
         {
             // Arrange
             Thermostat thermostat = new Thermostat("Living Room Thermostat");
-            thermostat.TurnOn();
+            thermostat.SwitchOn();
             int invalidTemperature = 50; // Assuming max temperature is 40
             thermostat.SetTemperatureToReach(invalidTemperature);
             // Act & Assert
@@ -40,7 +40,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatDevice
         {
             // Arrange
             Thermostat thermostat = new Thermostat("Living Room Thermostat");
-            thermostat.TurnOn();
+            thermostat.SwitchOn();
             double initialTemperature = thermostat.Temperature.Value ;
             // Act
             thermostat.IncreaseTemperatureToReach();
@@ -52,7 +52,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatDevice
         {
             // Arrange
             Thermostat thermostat = new Thermostat("Living Room Thermostat");
-            thermostat.TurnOn();
+            thermostat.SwitchOn();
             thermostat.SetTemperatureToReach(thermostat.Temperature.Max);
             // Act
             thermostat.IncreaseTemperatureToReach();
@@ -64,7 +64,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatDevice
         {
             // Arrange
             Thermostat thermostat = new Thermostat("Living Room Thermostat");
-            thermostat.TurnOn();
+            thermostat.SwitchOn();
             thermostat.SetTemperatureToReach(thermostat.Temperature.Min);
             // Act
             thermostat.DecreaseTemperatureToReach();
@@ -101,7 +101,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatDevice
         {
             // Arrange
             Thermostat thermostat = new Thermostat("Living Room Thermostat");
-            thermostat.TurnOn();
+            thermostat.SwitchOn();
             thermostat.SetFahrenheitMode();
             // Act & Assert
             Assert.Throws<Exception>(() => thermostat.SetFahrenheitMode());
@@ -111,7 +111,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatDevice
         {
             // Arrange
             Thermostat thermostat = new Thermostat("Living Room Thermostat");
-            thermostat.TurnOn();
+            thermostat.SwitchOn();
             // Act & Assert
             Assert.Throws<Exception>(() => thermostat.SetCelsiusMode());
         }
@@ -120,7 +120,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatDevice
         {
             // Arrange
             Thermostat thermostat = new Thermostat("Living Room Thermostat");
-            thermostat.TurnOn();
+            thermostat.SwitchOn();
             double initialTemperature = thermostat.Temperature.Value;
             // Act
             thermostat.SetFahrenheitMode();
@@ -133,7 +133,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatDevice
         {
             // Arrange
             Thermostat thermostat = new Thermostat("Living Room Thermostat");
-            thermostat.TurnOn();
+            thermostat.SwitchOn();
             thermostat.SetFahrenheitMode();
             // Act
             double expectedTemperature = (thermostat.Temperature.Value * 9 / 5) + 32;
@@ -146,7 +146,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatDevice
         {
             // Arrange
             Thermostat thermostat = new Thermostat("Living Room Thermostat");
-            thermostat.TurnOn();
+            thermostat.SwitchOn();
             double originalCelsiusTemperature = thermostat.Temperature.Value;
             // Act
             thermostat.SetFahrenheitMode();

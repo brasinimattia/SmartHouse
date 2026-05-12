@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BlaisePascal.SmartHouse.SharedKernel;
 
 namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 {
     public interface ILuminous
     {
-        void IncreaseBrightness();
-        void DecreaseBrightness();
-        void ChangeBrightness(int brightness);
+        Result IncreaseBrightness();
+        Result DecreaseBrightness();
+        Result ChangeBrightness(int brightness);
     }
 }

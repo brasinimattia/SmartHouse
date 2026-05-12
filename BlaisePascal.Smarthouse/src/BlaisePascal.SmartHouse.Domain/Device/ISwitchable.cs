@@ -9,7 +9,7 @@ namespace BlaisePascal.SmartHouse.Domain.Device
     public interface ISwitchable
     {
         void TurnOn();
-        void TurnOff();
+        void SwitchOff();
         void Toggle();
         void OnValidator();
     }

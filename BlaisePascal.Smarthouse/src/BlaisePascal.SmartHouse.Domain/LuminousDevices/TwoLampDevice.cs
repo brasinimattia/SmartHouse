@@ -10,11 +10,11 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
     public class TwoLampDevice
     {
         //Properties
-        public LampModel Lamp1 { get; private set; }
-        public LampModel Lamp2 { get; private set; }
+        public AbstractLamp Lamp1 { get; private set; }
+        public AbstractLamp Lamp2 { get; private set; }
 
         //Constructor
-        public TwoLampDevice(LampModel lamp1, LampModel lamp2)
+        public TwoLampDevice(AbstractLamp lamp1, AbstractLamp lamp2)
         {
             Lamp1 = lamp1;
             Lamp2 = lamp2;

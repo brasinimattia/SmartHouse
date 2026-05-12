@@ -22,7 +22,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.C
             Door door = _doorRepository.GetById(id);
             if (door != null)
             {
-                door.TurnOn();
+                door.SwitchOn();
                 _doorRepository.Update(door);
             }
         }

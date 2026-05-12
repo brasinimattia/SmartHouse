@@ -24,7 +24,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.C
             Door door = _doorRepository.GetById(id);
             if (door != null)
             {
-                door.TurnOff();
+                door.SwitchOff();
                 _doorRepository.Update(door);
             }
         }

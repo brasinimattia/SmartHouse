@@ -9,7 +9,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
     public class MatrixLed
     {
         //Properties
-        public LampModel[,] Matrix { get; private set; }
+        public AbstractLamp[,] Matrix { get; private set; }
         public int Rows { get; private set; }
         public int Columns { get; private set; }
 
@@ -18,7 +18,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 
         public MatrixLed(int rows, int columns)
         {
-            Matrix = new LampModel[rows, columns];
+            Matrix = new AbstractLamp[rows, columns];
             for(int r=0; r<rows; r++)
             {
                 for(int c=0; c<columns; c++)
@@ -30,7 +30,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
             Columns = columns;
         }
 
-        public MatrixLed(LampModel[,] m)
+        public MatrixLed(AbstractLamp[,] m)
         {
             Matrix = m;
         }
@@ -43,7 +43,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
                 for (int c = 0; c <Columns; c++)
                 {
                     if (Matrix[r, c].Status != Device.DeviceStatus.On)
-                        Matrix[r, c].TurnOn();
+                        Matrix[r, c].SwitchOn();
                 }
             }
         }
@@ -55,7 +55,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
                 for (int c = 0; c < Columns; c++)
                 {
                     if (Matrix[r, c].Status != Device.DeviceStatus.Off)
-                        Matrix[r, c].TurnOff();
+                        Matrix[r, c].SwitchOff();
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
             for(int c=0; c<Columns; c++)
             {
                 if (Matrix[rowIdx, c].Status != Device.DeviceStatus.On)
-                    Matrix[rowIdx, c].TurnOn();
+                    Matrix[rowIdx, c].SwitchOn();
             }
         }
 
@@ -74,7 +74,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
             for (int c = 0; c < Columns; c++)
             {
                 if (Matrix[rowIdx, c].Status != Device.DeviceStatus.Off)
-                    Matrix[rowIdx, c].TurnOff();
+                    Matrix[rowIdx, c].SwitchOff();
             }
         }
 
@@ -83,7 +83,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
             for (int r = 0; r<Rows; r++)
             {
                 if (Matrix[r, colIdx].Status != Device.DeviceStatus.On)
-                    Matrix[r,colIdx].TurnOn();
+                    Matrix[r,colIdx].SwitchOn();
             }
         }
 
@@ -92,7 +92,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
             for (int r = 0; r <Rows ; r++)
             {
                 if (Matrix[r, colIdx].Status != Device.DeviceStatus.Off)
-                    Matrix[r, colIdx].TurnOff();
+                    Matrix[r, colIdx].SwitchOff();
             }
         }
 
@@ -121,13 +121,13 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
         public void TurnOnSingleLamp(int rowIdx, int colIdx)
         {
             if (Matrix[rowIdx, colIdx].Status != Device.DeviceStatus.On)
-                Matrix[rowIdx, colIdx].TurnOn();
+                Matrix[rowIdx, colIdx].SwitchOn();
         }
 
         public void TurnOffSingleLamp(int rowIdx, int colIdx)
         {
             if (Matrix[rowIdx, colIdx].Status != Device.DeviceStatus.Off)
-                Matrix[rowIdx, colIdx].TurnOff();
+                Matrix[rowIdx, colIdx].SwitchOff();
         }
 
         public void IncreaseSingleLampBrightness(int rowIdx, int colIdx)

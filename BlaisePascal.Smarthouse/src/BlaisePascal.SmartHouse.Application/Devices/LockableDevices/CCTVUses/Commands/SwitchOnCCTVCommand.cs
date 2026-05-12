@@ -22,7 +22,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.C
             CCTV cctv = _cctvRepository.GetById(id);
             if (cctv != null)
             {
-                cctv.TurnOn();
+                cctv.SwitchOn();
                 _cctvRepository.Update(cctv);
             }
         }

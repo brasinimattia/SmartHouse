@@ -355,7 +355,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LuminousDevices
                 lampsrow.AddLamp(new Lamp($"{i + 1}"));
             }
             //Assert
-            Assert.Equal(new List<LampModel>(), lampsrow.FindAllOn());
+            Assert.Equal(new List<AbstractLamp>(), lampsrow.FindAllOn());
         }
 
         [Fact]
@@ -403,7 +403,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LuminousDevices
             }
             lampsrow.SwitchAllOn();
             //Assert
-            Assert.Equal(new List<LampModel>(), lampsrow.FindAllOff());
+            Assert.Equal(new List<AbstractLamp>(), lampsrow.FindAllOff());
         }
 
         [Fact]

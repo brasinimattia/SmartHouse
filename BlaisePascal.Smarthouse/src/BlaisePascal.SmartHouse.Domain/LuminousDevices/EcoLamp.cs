@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Device;
+using BlaisePascal.SmartHouse.SharedKernel;
 
 namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 {
-    public class EcoLamp: LampModel
+    public class EcoLamp: AbstractLamp
     {
         //Const
         private const int DefaultAutoOffMinutes = 10;
@@ -21,33 +22,53 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
        
         public EcoLamp(Guid newID, string name): base( newID, name ) { }
 
-        public override void TurnOn()
+        public override Result SwitchOn()
         {
-            base.TurnOn();
-            autoOffAtUtc = DateTime.Now.AddMinutes(DefaultAutoOffMinutes);
+            var result = base.SwitchOn();
+            if (result.IsSuccess)
+            {
+                autoOffAtUtc = DateTime.Now.AddMinutes(DefaultAutoOffMinutes);
+            }
+            return result;
         }
         
-        public override void TurnOff()
+        public override Result SwitchOff()
         {
-            base.TurnOff();
-            autoOffAtUtc = null;
+            var result = base.SwitchOff();
+            if (result.IsSuccess)
+            {
+                autoOffAtUtc = DateTime.Now.AddMinutes(DefaultAutoOffMinutes);
+            }
+            return result;
         }
-        public override void ChangeBrightness(int value)
+        public override Result ChangeBrightness(int value)
         {
-            base.ChangeBrightness(value);
-            ResetAutoOffIfNeeded();
+            var result = base.ChangeBrightness(value);
+            if (result.IsSuccess)
+            {
+                ResetAutoOffIfNeeded();
+            }
+            return result;
         }
 
-        public override void DecreaseBrightness()
+        public override Result DecreaseBrightness()
         {
-            base.DecreaseBrightness();
-            ResetAutoOffIfNeeded();
+            var result = base.DecreaseBrightness();
+            if (result.IsSuccess)
+            {
+                ResetAutoOffIfNeeded();
+            }
+            return result;
         }
 
-        public override void IncreaseBrightness()
+        public override Result IncreaseBrightness()
         {
-            base.IncreaseBrightness();
-            ResetAutoOffIfNeeded();
+            var result = base.IncreaseBrightness();
+            if (result.IsSuccess)
+            {
+                ResetAutoOffIfNeeded();
+            }
+            return result;
         }
 
         public void CheckAutoOff()
@@ -56,7 +77,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
                 autoOffAtUtc.HasValue &&
                 DateTime.Now >= autoOffAtUtc.Value)
             {
-                TurnOff();
+                SwitchOff();
             }
         }
 
