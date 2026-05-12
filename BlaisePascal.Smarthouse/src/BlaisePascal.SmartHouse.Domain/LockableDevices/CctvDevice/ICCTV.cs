@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlaisePascal.SmartHouse.SharedKernel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice
 {
     public interface ICCTV
     {
-        void SetNightMode();
-        void SetNormalMode();
-        void SetMode(CCTVMode mode);
-        void StartRecording();
-        void StopRecording();
+        Result SetNightMode();
+        Result SetNormalMode();
+        Result SetMode(CCTVMode mode);
+        Result StartRecording();
+        Result StopRecording();
     }
 }

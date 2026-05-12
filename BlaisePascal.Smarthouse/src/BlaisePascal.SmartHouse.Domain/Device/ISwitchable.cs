@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlaisePascal.SmartHouse.SharedKernel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace BlaisePascal.SmartHouse.Domain.Device
 {
     public interface ISwitchable
     {
-        void TurnOn();
-        void SwitchOff();
+        Result SwitchOn();
+        Result SwitchOff();
         void Toggle();
         void OnValidator();
     }
