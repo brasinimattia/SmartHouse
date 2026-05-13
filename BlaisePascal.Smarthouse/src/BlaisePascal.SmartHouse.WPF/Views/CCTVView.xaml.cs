@@ -1,5 +1,5 @@
 ﻿using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands;
-using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Queries; // Assicurati di avere questo namespace per la Query
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Queries; 
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Dto;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice.Repository;
 using BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lockable.CCTVs.InMemory;

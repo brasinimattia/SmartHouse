@@ -17,6 +17,7 @@ namespace BlaisePascal.SmartHouse.Domain.abstraction.Errors
         public static readonly Error CannotOpenDoor = new("Door.CannotOpenDoor", "Cannot open the door.", ErrorType.Conflict);
         public static readonly Error CannotUnlockDoor = new("Door.CannotUnlockDoor", "Cannot unlock door.", ErrorType.Conflict);
         public static readonly Error CannotCloseDoor = new("Door.CannotCloseDoor", "Cannot close the door.", ErrorType.Conflict);
+        public static readonly Error CannotSetPassword = new("Door.CannotSetPassword", "Cannot set password if the new password is empty or white space.", ErrorType.Failure);
         public DoorErrors(string code, string description, ErrorType type) : base(code, description, type)
         {
         }

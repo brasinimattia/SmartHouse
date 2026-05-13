@@ -112,7 +112,7 @@ public class CCTV : AbstractDevice, ICCTV, ILockable
     public Result SetPassword(string password)
     {
         if (string.IsNullOrWhiteSpace(password))
-            return Result.Failure(CCTVErrors.TemporaryError); //Errore Temporaneo 
+            return Result.Failure(CCTVErrors.CannotSetPassword);
 
         Password = Password.Create(password);
         Touch();
