@@ -7,7 +7,7 @@ using BlaisePascal.SmartHouse.SharedKernel;
 
 namespace BlaisePascal.SmartHouse.Domain.abstraction.Errors
 {
-    public static class CctvErrors
+    public record CCTVErrors: Error
     {
         public static readonly Error AlreadyOn = new("CCTV.AlreadyOn", "La telecamera è già accesa.", ErrorType.Conflict);
         public static readonly Error AlreadyOff = new("CCTV.AlreadyOff", "La telecamera è già spenta.", ErrorType.Conflict);
@@ -19,6 +19,10 @@ namespace BlaisePascal.SmartHouse.Domain.abstraction.Errors
         public static readonly Error CannotLock = new("CCTV.CannotLock", "Impossibile bloccare la CCTV nelle condizioni attuali.", ErrorType.Conflict);
         public static readonly Error CannotUnlock = new("CCTV.CannotUnlock", "Impossibile sbloccare la CCTV. Verificare la password.", ErrorType.Conflict);
         public static readonly Error TemporaryError = new("","", ErrorType.Conflict); //TEMPORANEO
+
+        public CCTVErrors(string code, string description, ErrorType type) : base(code, description, type)
+        {
+        }
     }
 }
 

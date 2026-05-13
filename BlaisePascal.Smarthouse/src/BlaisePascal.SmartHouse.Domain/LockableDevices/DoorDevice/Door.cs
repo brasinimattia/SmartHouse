@@ -48,10 +48,11 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice
             {
                 result = Result.Success();
                 DoorStatus = DoorStatus.Open;
+                Touch();
             }
             else
                 result = Result.Failure(DoorErrors.CannotOpenDoor);
-            Touch();
+            
             return result;
 
         }
@@ -64,10 +65,11 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice
             {
                 result = Result.Success();
                 DoorStatus = DoorStatus.Closed;
+                Touch();
             }
             else
                 result = Result.Failure(DoorErrors.AlreadyClosed);
-            Touch();
+            
             return result;
         }
 
@@ -85,13 +87,13 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice
             {
                 result = Result.Success();
                 LockingStatus = LockingStatus.Locked;
+                Touch();
             }
             else
             {
                 result = Result.Failure(DoorErrors.CannotLockDoor);
             }
 
-            Touch();
             return result;
         }
 
@@ -109,13 +111,13 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice
             {
                 result = Result.Success();
                 LockingStatus = LockingStatus.Unlocked;
+                Touch();
             }
             else
             {
                 result = Result.Failure(DoorErrors.CannotUnlockDoor);
             }
 
-            Touch();
             return result;
         }
 

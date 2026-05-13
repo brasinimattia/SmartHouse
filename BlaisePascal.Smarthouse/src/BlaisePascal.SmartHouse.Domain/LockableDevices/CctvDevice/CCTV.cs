@@ -45,7 +45,7 @@ public class CCTV : AbstractDevice, ICCTV, ILockable
     public override Result SwitchOn()
     {
         if (Status == DeviceStatus.On)
-            return Result.Failure(CctvErrors.AlreadyOn);
+            return Result.Failure(CCTVErrors.AlreadyOn);
 
         Status = DeviceStatus.On;
         Raise(new DeviceSwitchedOnEvent(Id));
@@ -57,7 +57,7 @@ public class CCTV : AbstractDevice, ICCTV, ILockable
     public override Result SwitchOff()
     {
         if (Status == DeviceStatus.Off)
-            return Result.Failure(CctvErrors.AlreadyOff);
+            return Result.Failure(CCTVErrors.AlreadyOff);
 
         Status = DeviceStatus.Off;
         Raise(new DeviceSwitchedOffEvent(Id)); 
@@ -75,10 +75,10 @@ public class CCTV : AbstractDevice, ICCTV, ILockable
         OnValidator();
 
         if (Mode == mode)
-            return Result.Failure(CctvErrors.ModeAlreadySet);
+            return Result.Failure(CCTVErrors.ModeAlreadySet);
 
         Mode = mode;
-        LastModifiedAtUtc = DateTime.UtcNow;
+        Touch();
 
         return Result.Success();
     }
@@ -88,10 +88,10 @@ public class CCTV : AbstractDevice, ICCTV, ILockable
         OnValidator();
 
         if (isRecording)
-            return Result.Failure(CctvErrors.AlreadyRecording);
+            return Result.Failure(CCTVErrors.AlreadyRecording);
 
         isRecording = true;
-        LastModifiedAtUtc = DateTime.UtcNow;
+        Touch();
 
         return Result.Success();
     }
@@ -101,10 +101,10 @@ public class CCTV : AbstractDevice, ICCTV, ILockable
         OnValidator();
 
         if (!isRecording)
-            return Result.Failure(CctvErrors.NotRecording);
+            return Result.Failure(CCTVErrors.NotRecording);
 
         isRecording = false;
-        LastModifiedAtUtc = DateTime.UtcNow;
+        Touch();
 
         return Result.Success();
     }
@@ -112,10 +112,10 @@ public class CCTV : AbstractDevice, ICCTV, ILockable
     public Result SetPassword(string password)
     {
         if (string.IsNullOrWhiteSpace(password))
-            return Result.Failure(CctvErrors.TemporaryError); //Errore Temporaneo 
+            return Result.Failure(CCTVErrors.TemporaryError); //Errore Temporaneo 
 
         Password = Password.Create(password);
-        LastModifiedAtUtc = DateTime.UtcNow;
+        Touch();
 
         return Result.Success();
     }
@@ -130,11 +130,11 @@ public class CCTV : AbstractDevice, ICCTV, ILockable
         if (LockingStatus == LockingStatus.Locked && (noPassword || correctPassword))
         {
             LockingStatus = LockingStatus.Unlocked;
-            LastModifiedAtUtc = DateTime.UtcNow;
+            Touch();
             return Result.Success();
         }
 
-        return Result.Failure(CctvErrors.CannotUnlock);
+        return Result.Failure(CCTVErrors.CannotUnlock);
     }
 
     public Result Lock(string key)
@@ -147,10 +147,10 @@ public class CCTV : AbstractDevice, ICCTV, ILockable
         if (LockingStatus == LockingStatus.Unlocked && (noPassword || correctPassword))
         {
             LockingStatus = LockingStatus.Locked;
-            LastModifiedAtUtc = DateTime.UtcNow;
+            Touch();
             return Result.Success();
         }
 
-        return Result.Failure(CctvErrors.CannotLock);
+        return Result.Failure(CCTVErrors.CannotLock);
     }
 }
