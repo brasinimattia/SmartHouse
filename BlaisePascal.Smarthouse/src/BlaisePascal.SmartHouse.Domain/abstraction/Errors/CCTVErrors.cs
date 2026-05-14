@@ -18,10 +18,12 @@ namespace BlaisePascal.SmartHouse.Domain.abstraction.Errors
         public static readonly Error AlreadyUnlocked = new("CCTV.AlreadyUnlocked", "Il dispositivo è già sbloccato.", ErrorType.Conflict);
         public static readonly Error CannotLock = new("CCTV.CannotLock", "Impossibile bloccare la CCTV nelle condizioni attuali.", ErrorType.Conflict);
         public static readonly Error CannotUnlock = new("CCTV.CannotUnlock", "Impossibile sbloccare la CCTV. Verificare la password.", ErrorType.Conflict);
-        public static readonly Error CannotSetPassword = new("CCTV.CannotSetPassword", "Cannot set password if the new password is empty or white space.", ErrorType.Failure);
+        public static readonly Error TemporaryError = new("","", ErrorType.Conflict); //TEMPORANEO
 
         public CCTVErrors(string code, string description, ErrorType type) : base(code, description, type)
         {
         }
     }
 }
+
+//TODO : Implementare Errori su Setpassword (Braso come hai chiesto non li ho messi) => Ho messo il Temporary error apposta per non avere errori

@@ -1,18 +1,18 @@
-﻿using BlaisePascal.SmartHouse.Domain.LuminousDevices;
-using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository;
+﻿using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository;
+using BlaisePascal.SmartHouse.Domain.LuminousDevices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands
+namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.SwitchOff
 {
-    public class DecreaseBrightnessLampCommand
+    public class SwitchOffLampCommand
     {
         private readonly ILampRepository _lampRepository;
 
-        public DecreaseBrightnessLampCommand(ILampRepository lampRepository)
+        public SwitchOffLampCommand(ILampRepository lampRepository)
         {
             _lampRepository = lampRepository;
         }
@@ -20,9 +20,9 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.C
         public void Execute(Guid id)
         {
             Lamp lamp = _lampRepository.GetById(id);
-            if (lamp != null)
+            if(lamp != null)
             {
-                lamp.DecreaseBrightness();
+                lamp.SwitchOff();
                 _lampRepository.Update(lamp);
             }
         }

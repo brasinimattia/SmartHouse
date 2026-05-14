@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository;
 
-namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands
+namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.ChangeBrightness
 {
     public class ChangeBrightnessLampCommand
     {
