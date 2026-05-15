@@ -18,7 +18,7 @@ namespace BlaisePascal.SmartHouse.Domain.abstraction.Errors
         public static readonly Error AlreadyUnlocked = new("CCTV.AlreadyUnlocked", "Il dispositivo è già sbloccato.", ErrorType.Conflict);
         public static readonly Error CannotLock = new("CCTV.CannotLock", "Impossibile bloccare la CCTV nelle condizioni attuali.", ErrorType.Conflict);
         public static readonly Error CannotUnlock = new("CCTV.CannotUnlock", "Impossibile sbloccare la CCTV. Verificare la password.", ErrorType.Conflict);
-        public static readonly Error TemporaryError = new("","", ErrorType.Conflict); //TEMPORANEO
+        public static readonly Error CannotSetPassword = new("CCTV.CannotSetPassword", "Non si può cambiare passwordse la nuova password è vuota", ErrorType.Conflict); //TEMPORANEO
 
         public CCTVErrors(string code, string description, ErrorType type) : base(code, description, type)
         {

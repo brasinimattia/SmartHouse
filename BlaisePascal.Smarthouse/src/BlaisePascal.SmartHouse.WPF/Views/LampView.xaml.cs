@@ -1,4 +1,9 @@
 ﻿using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.AddLamp;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.ChangeBrightness;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.RemoveLamp;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.SwitchOff;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.SwitchOn;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Dto;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Queries;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository;
