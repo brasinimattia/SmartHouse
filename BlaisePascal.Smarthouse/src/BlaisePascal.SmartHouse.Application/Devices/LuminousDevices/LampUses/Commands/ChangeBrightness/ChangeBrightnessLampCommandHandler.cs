@@ -3,10 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository;
+using BlaisePascal.SmartHouse.SharedKernel;
+using MediatR;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.ChangeBrightness
 {
-    internal class ChangeBrightnessLampCommandHandler
+    public sealed class ChangeBrightnessLampCommandHandler : IRequestHandler<ChangeBrightnessLampCommand, Result<Guid>>
     {
+        private readonly ILampRepository _lampRepository;
+        public ChangeBrightnessLampCommandHandler(ILampRepository lampRepository)
+        {
+            _lampRepository = lampRepository;
+        }
+
+        public Task<Result<Guid>> Handle(ChangeBrightnessLampCommand request, CancellationToken cancellationToken)
+        {
+            var lamp = _lampRepository.GetById(request.Id);
+            //if (lamp == null)
+                //TO DO : create error for not found lamp
+                //return Task.FromResult(Result.Failure<Guid>());
+                var result = lamp.ChangeBrightness(request.Amount);
+            if(result.IsFailure)
+            {
+                return Task.FromResult(Result.Failure<Guid>(result.Error));
+            }
+            _lampRepository.Update(lamp);
+            return Task.FromResult(Result.Success<Guid>(lamp.Id));
+        }
     }
 }
