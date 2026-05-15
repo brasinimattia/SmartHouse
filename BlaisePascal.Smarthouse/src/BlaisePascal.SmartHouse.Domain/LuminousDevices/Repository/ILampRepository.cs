@@ -1,4 +1,5 @@
 ﻿using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice;
+using BlaisePascal.SmartHouse.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository
 {
     public interface ILampRepository
     {
-        void Add(Lamp lamp);
-        void Update(Lamp lamp);
-        void Remove(Guid id);
+        Result Add(Lamp lamp);
+        Result Update(Lamp lamp);
+        Result Remove(Guid id);
         Lamp GetById(Guid id);
         List<Lamp> GetAll();
     }
