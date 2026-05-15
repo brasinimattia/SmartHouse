@@ -25,7 +25,7 @@ namespace BlaisePascal.SmartHouse.WPF.Views
                 _cctvRepository = new InMemoryCCTVRepository();
             }
 
-            RefreshCctvList();
+            //RefreshCctvList();
         }
 
         private void RefreshCctvList()

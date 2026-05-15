@@ -33,7 +33,7 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         {
             InitializeComponent();
             _doorRepository = new InMemoryDoorRepository();
-            RefreshDoorList();
+            //RefreshDoorList();
         }
 
         private void RefreshDoorList()
