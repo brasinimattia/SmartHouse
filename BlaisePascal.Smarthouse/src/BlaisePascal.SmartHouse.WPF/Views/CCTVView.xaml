@@ -1,134 +1,235 @@
 ﻿<UserControl x:Class="BlaisePascal.SmartHouse.WPF.Views.CCTVView"
-            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-            mc:Ignorable="d" 
-            d:DesignHeight="700" d:DesignWidth="1000"
-            Background="White">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
 
-    <Grid Margin="20">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="350" />
-        </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#F0F4F8" Offset="0.0" />
+                <GradientStop Color="#D9E2EC" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
 
-        <Grid Grid.Column="0" Margin="0,0,20,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <Grid Margin="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="400" />
+            </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
-                <TextBlock Text="📹" FontSize="28" Margin="0,0,10,0"/>
-                <TextBlock Text="CCTV Manager" FontSize="28" FontWeight="Bold" Foreground="#334E68"/>
-            </StackPanel>
-
-            <ListView x:Name="CctvList" Grid.Row="1" SelectionChanged="CctvList_SelectionChanged" 
-                     BorderBrush="Transparent" Background="#F0F4F8" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Border Background="#F0F4F8" CornerRadius="5" Margin="5" Padding="15" Width="450"
-                               BorderBrush="#F0F4F8" BorderThickness="1">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <TextBlock Grid.Row="0" Text="{Binding Name}" FontWeight="Bold" FontSize="18" Foreground="Black"/>
-
-                                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,10,0,0">
-                                    <TextBlock Text="{Binding Status}" Foreground="Gray" Margin="0,0,15,0"/>
-                                    <TextBlock Text="{Binding Mode}" Foreground="Gray" Margin="0,0,15,0"/>
-                                    <TextBlock Text="REC" Foreground="#334E68" FontWeight="Bold" Visibility="{Binding IsRecording, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,15,0"/>
-                                    <TextBlock Text="{Binding LockingStatus}" Foreground="Gray"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
-
-        <Border Grid.Column="1" Background="White" CornerRadius="5" Padding="20" BorderBrush="#CCCCCC" BorderThickness="1">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <TextBlock Text="Management" FontSize="22" FontWeight="Bold" Foreground="Black" Margin="0,0,0,20"/>
-
-                    <TextBox x:Name="NewCctvNameTextBox" Margin="0,0,0,10" Padding="8" 
-                            Background="White" Foreground="Black" BorderBrush="#CCCCCC" BorderThickness="1" 
-                            Text="Device Name" GotFocus="TextBox_GotFocus"/>
-                    <Button Content="ADD DEVICE" Click="Add_Click" 
-                           Background="#2196F3" Foreground="White" BorderThickness="0" Padding="10" Margin="0,0,0,20"/>
-
-                    <Separator Margin="0,0,0,20"/>
-
-                    <Grid Margin="0,0,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="ON" Click="On_Click" Background="#5C6BC0" Foreground="White" BorderThickness="0" Padding="8" Margin="0,0,5,0"/>
-                        <Button Grid.Column="1" Content="OFF" Click="Off_Click" Background="#5C6BC0" Foreground="White" BorderThickness="0" Padding="8" Margin="2.5,0,2.5,0"/>
-                        <Button Grid.Column="2" Content="TOGGLE" Click="Toggle_Click" Background="#5C6BC0" Foreground="White" BorderThickness="0" Padding="8" Margin="5,0,0,0"/>
-                    </Grid>
-
-                    <Grid Margin="0,0,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="Normal Mode" Click="NormalMode_Click" Background="#334E68" Foreground="White" BorderThickness="0" Padding="8" Margin="0,0,5,0"/>
-                        <Button Grid.Column="1" Content="Night Mode" Click="NightMode_Click" Background="#334E68" Foreground="White" BorderThickness="0" Padding="8" Margin="5,0,0,0"/>
-                    </Grid>
-
-                    <Separator Margin="0,0,0,20"/>
-
-                    <Grid Margin="0,0,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="START REC" Click="StartRec_Click" Background="#78909C" Foreground="White" BorderThickness="0" Padding="8" Margin="0,0,5,0"/>
-                        <Button Grid.Column="1" Content="STOP REC" Click="StopRec_Click" Background="#37474F" Foreground="White" BorderThickness="0" Padding="8" Margin="5,0,0,0"/>
-                    </Grid>
-
-                    <Separator Margin="0,0,0,20"/>
-
-                    <TextBox x:Name="KeyTextBox" Margin="0,0,0,10" Padding="8" 
-                            Background="White" Foreground="Black" BorderBrush="#CCCCCC" BorderThickness="1" 
-                            Text="Enter Password/Key" GotFocus="TextBox_GotFocus"/>
-                    <Grid Margin="0,0,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="UNLOCK" Click="Unlock_Click" Background="#78909C" Foreground="White" BorderThickness="0" Padding="8" Margin="0,0,5,0"/>
-                        <Button Grid.Column="1" Content="LOCK" Click="Lock_Click" Background="#37474F" Foreground="White" BorderThickness="0" Padding="8" Margin="5,0,0,0"/>
-                    </Grid>
-                    <Button Content="SET NEW PASSWORD" Click="SetPassword_Click" Background="#5C6BC0" Foreground="White" BorderThickness="0" Padding="8" Margin="0,0,0,20"/>
-
-                    <Separator Margin="0,0,0,20"/>
-
-                    <Grid Margin="0,0,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="Sort By Name" Click="SortName_Click" Background="#E0E0E0" Foreground="Black" BorderThickness="0" Padding="8" Margin="0,0,5,0"/>
-                        <Button Grid.Column="1" Content="Sort By Status" Click="SortStatus_Click" Background="#E0E0E0" Foreground="Black" BorderThickness="0" Padding="8" Margin="5,0,0,0"/>
-                    </Grid>
-
-                    <Button Content="REMOVE DEVICE" Click="Remove_Click" Background="#F44336" Foreground="White" BorderThickness="0" Padding="10" Margin="0,10,0,0"/>
-
+            <DockPanel Grid.Column="0">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10,0,0,30">
+                    <materialDesign:PackIcon Kind="Cctv" Width="35" Height="35" VerticalAlignment="Center" Foreground="#5C6BC0"/>
+                    <TextBlock Text="CCTV Manager" Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                               FontWeight="Bold" Foreground="#334E68" Margin="15,0,0,0" VerticalAlignment="Center"/>
                 </StackPanel>
-            </ScrollViewer>
-        </Border>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListBox x:Name="CctvList" Background="Transparent" BorderThickness="0" SelectionChanged="CctvList_SelectionChanged">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel HorizontalAlignment="Left" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="240" Height="170" Margin="10">
+
+                                    <Border x:Name="GlowBorder" CornerRadius="24" Background="White" Opacity="0">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="35" ShadowDepth="0" Color="#5C6BC0" Opacity="0.7"/>
+                                        </Border.Effect>
+                                    </Border>
+
+                                    <Border x:Name="MainCard" CornerRadius="24" BorderThickness="2" Background="#A6FFFFFF" BorderBrush="#E6FFFFFF" Padding="20">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="15" ShadowDepth="3" Opacity="0.04" Color="#102A43"/>
+                                        </Border.Effect>
+
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                                <materialDesign:PackIcon x:Name="VideoIcon" Kind="Video" Width="24" Height="24" VerticalAlignment="Center" Foreground="#B0BEC5"/>
+                                                <TextBlock x:Name="DeviceNameText" Text="{Binding Name}" FontSize="18" FontWeight="SemiBold" Foreground="#37474F" Margin="10,0,0,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                                                <DockPanel Margin="0,4">
+                                                    <TextBlock x:Name="ModeLabel" Text="Mode" FontSize="12" Foreground="#90A4AE" VerticalAlignment="Center"/>
+                                                    <TextBlock x:Name="ModeText" Text="{Binding Mode}" FontSize="12" FontWeight="SemiBold" Foreground="#607D8B" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                                </DockPanel>
+
+                                                <DockPanel Margin="0,4">
+                                                    <TextBlock x:Name="SecurityLabel" Text="Security" FontSize="12" Foreground="#90A4AE" VerticalAlignment="Center"/>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                        <materialDesign:PackIcon x:Name="LockIcon" Width="18" Height="18" VerticalAlignment="Center" Margin="0,0,6,0" Kind="LockOpen" Foreground="#4CAF50"/>
+                                                        <TextBlock x:Name="SecurityStatusText" Text="{Binding LockingStatus}" FontSize="12" FontWeight="SemiBold" Foreground="#607D8B" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </DockPanel>
+                                            </StackPanel>
+
+                                            <Grid Grid.Row="2">
+                                                <TextBlock x:Name="StatusText" Text="{Binding Status}" FontSize="11" FontWeight="Bold" Foreground="#90A4AE" VerticalAlignment="Center"/>
+
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding IsRecording, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                    <Ellipse Width="8" Height="8" Fill="#D32F2F" VerticalAlignment="Center" Margin="0,0,6,0">
+                                                        <Ellipse.Triggers>
+                                                            <EventTrigger RoutedEvent="Loaded">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard RepeatBehavior="Forever">
+                                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.2" Duration="0:0:0.8" AutoReverse="True"/>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                        </Ellipse.Triggers>
+                                                    </Ellipse>
+                                                    <TextBlock Text="REC" FontSize="11" FontWeight="Bold" Foreground="#D32F2F" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding Status}" Value="ON">
+                                        <Setter TargetName="MainCard" Property="Background" Value="#CCFFFFFF"/>
+                                        <Setter TargetName="MainCard" Property="BorderBrush" Value="#805C6BC0"/>
+                                        <Setter TargetName="VideoIcon" Property="Foreground" Value="#5C6BC0"/>
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard x:Name="PulseIndigo">
+                                                <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                                    <DoubleAnimation Storyboard.TargetName="GlowBorder" 
+                                                                     Storyboard.TargetProperty="Opacity" 
+                                                                     From="0.2" To="0.8" Duration="0:0:1.6"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.EnterActions>
+                                        <DataTrigger.ExitActions>
+                                            <StopStoryboard BeginStoryboardName="PulseIndigo"/>
+                                        </DataTrigger.ExitActions>
+                                    </DataTrigger>
+
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Status}" Value="ON"/>
+                                            <Condition Binding="{Binding Mode}" Value="NIGHT"/>
+                                        </MultiDataTrigger.Conditions>
+
+                                        <MultiDataTrigger.EnterActions>
+                                            <StopStoryboard BeginStoryboardName="PulseIndigo"/>
+                                            <BeginStoryboard x:Name="PulsePhosphor">
+                                                <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                                    <DoubleAnimation Storyboard.TargetName="GlowBorder" 
+                                                                     Storyboard.TargetProperty="Opacity" 
+                                                                     From="0.4" To="1.0" Duration="0:0:0.9"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </MultiDataTrigger.EnterActions>
+                                        <MultiDataTrigger.ExitActions>
+                                            <StopStoryboard BeginStoryboardName="PulsePhosphor"/>
+                                        </MultiDataTrigger.ExitActions>
+
+                                        <Setter TargetName="GlowBorder" Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect BlurRadius="25" ShadowDepth="0" Color="#FF00FF00" Opacity="0.95"/>
+                                            </Setter.Value>
+                                        </Setter>
+
+                                        <Setter TargetName="MainCard" Property="Background" Value="#E60D1A0D"/>
+                                        <Setter TargetName="MainCard" Property="BorderBrush" Value="#FF00FF00"/>
+                                        <Setter TargetName="DeviceNameText" Property="Foreground" Value="#FF00FF00"/>
+                                        <Setter TargetName="VideoIcon" Property="Foreground" Value="#FF00FF00"/>
+
+                                        <Setter TargetName="ModeLabel" Property="Foreground" Value="#8000FF00"/>
+                                        <Setter TargetName="ModeText" Property="Foreground" Value="#FF00FF00"/>
+
+                                        <Setter TargetName="SecurityLabel" Property="Foreground" Value="#8000FF00"/>
+                                        <Setter TargetName="SecurityStatusText" Property="Foreground" Value="#FF00FF00"/>
+                                        <Setter TargetName="LockIcon" Property="Foreground" Value="#FF00FF00"/>
+
+                                        <Setter TargetName="StatusText" Property="Foreground" Value="#FF00FF00"/>
+                                    </MultiDataTrigger>
+
+                                    <DataTrigger Binding="{Binding LockingStatus}" Value="Locked">
+                                        <Setter TargetName="LockIcon" Property="Kind" Value="Lock"/>
+                                        <Setter TargetName="LockIcon" Property="Foreground" Value="#E53935"/>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
+            </DockPanel>
+
+            <Border Grid.Column="1" Background="#A6FFFFFF" CornerRadius="28" Padding="30" Margin="15,0,0,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock Text="Management" FontWeight="Bold" FontSize="20" Margin="0,0,0,20" Foreground="#334E68"/>
+
+                        <TextBox x:Name="NewCctvNameTextBox" materialDesign:HintAssist.Hint="Device Name" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,0,15"/>
+                        <Button Content="ADD DEVICE" Click="Add_Click" Background="#5C6BC0" materialDesign:ButtonAssist.CornerRadius="24" Height="48"/>
+
+                        <Separator Margin="0,25" Background="#20607D8B"/>
+
+                        <TextBlock Text="Power Controls" FontSize="12" FontWeight="Bold" Foreground="#90A4AE" Margin="0,0,0,10"/>
+                        <UniformGrid Columns="3" Margin="0,0,0,20">
+                            <Button Content="ON" Click="On_Click" Margin="0,0,4,0" Background="#5C6BC0" materialDesign:ButtonAssist.CornerRadius="18"/>
+                            <Button Content="OFF" Click="Off_Click" Margin="2,0,2,0" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#5C6BC0" materialDesign:ButtonAssist.CornerRadius="18"/>
+                            <Button Content="TOGGLE" Click="Toggle_Click" Margin="4,0,0,0" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#5C6BC0" materialDesign:ButtonAssist.CornerRadius="18"/>
+                        </UniformGrid>
+
+                        <TextBlock Text="Vision Mode" FontSize="12" FontWeight="Bold" Foreground="#90A4AE" Margin="0,0,0,10"/>
+                        <UniformGrid Columns="2" Margin="0,0,0,20">
+                            <Button Content="Normal" Click="NormalMode_Click" Margin="0,0,5,0" Background="#334E68" materialDesign:ButtonAssist.CornerRadius="18"/>
+                            <Button Content="Night" Click="NightMode_Click" Margin="5,0,0,0" Background="#37474F" materialDesign:ButtonAssist.CornerRadius="18"/>
+                        </UniformGrid>
+
+                        <TextBlock Text="DVR Recording" FontSize="12" FontWeight="Bold" Foreground="#90A4AE" Margin="0,0,0,10"/>
+                        <UniformGrid Columns="2" Margin="0,0,0,25">
+                            <Button Content="START REC" Click="StartRec_Click" Margin="0,0,5,0" Background="#E53935" BorderBrush="#E53935" materialDesign:ButtonAssist.CornerRadius="18"/>
+                            <Button Content="STOP REC" Click="StopRec_Click" Margin="5,0,0,0" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#E53935" BorderBrush="#E53935" materialDesign:ButtonAssist.CornerRadius="18"/>
+                        </UniformGrid>
+
+                        <Separator Margin="0,10" Background="#20607D8B"/>
+
+                        <TextBlock Text="Security Systems" FontSize="12" FontWeight="Bold" Foreground="#90A4AE" Margin="0,0,0,10"/>
+                        <TextBox x:Name="KeyTextBox" materialDesign:HintAssist.Hint="Password / Key" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,0,15"/>
+                        <UniformGrid Columns="2" Margin="0,0,0,10">
+                            <Button Content="UNLOCK" Click="Unlock_Click" Margin="0,0,5,0" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#4CAF50" BorderBrush="#4CAF50" materialDesign:ButtonAssist.CornerRadius="18"/>
+                            <Button Content="LOCK" Click="Lock_Click" Margin="5,0,0,0" Background="#E53935" BorderBrush="#E53935" materialDesign:ButtonAssist.CornerRadius="18"/>
+                        </UniformGrid>
+                        <Button Content="SET NEW PASSWORD" Click="SetPassword_Click" Style="{StaticResource MaterialDesignFlatMidBgButton}" Background="#5C6BC0" materialDesign:ButtonAssist.CornerRadius="24" Height="40" Margin="0,0,0,20"/>
+
+                        <Separator Margin="0,10" Background="#20607D8B"/>
+
+                        <UniformGrid Columns="2" Margin="0,0,0,15">
+                            <Button Click="SortName_Click" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="#CFD8DC" Foreground="#607D8B" Content="Sort By Name" materialDesign:ButtonAssist.CornerRadius="18"/>
+                            <Button Click="SortStatus_Click" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="#CFD8DC" Foreground="#607D8B" Content="Sort By Status" materialDesign:ButtonAssist.CornerRadius="18"/>
+                        </UniformGrid>
+
+                        <Button Click="Remove_Click" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#D32F2F" BorderBrush="#FFCDD2" materialDesign:ButtonAssist.CornerRadius="24" Height="44">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Delete" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="REMOVE DEVICE" VerticalAlignment="Center" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>
