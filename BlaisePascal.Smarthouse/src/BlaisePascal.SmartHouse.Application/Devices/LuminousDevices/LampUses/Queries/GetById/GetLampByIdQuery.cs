@@ -7,10 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Dto;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Mappers;
+using MediatR;
+using BlaisePascal.SmartHouse.SharedKernel;
 
-namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Queries
+namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Queries.GetById
 {
-    public class GetLampByIdQuery
+    /*public class GetLampByIdQuery
     {
         private readonly ILampRepository _lampRepository;
 
@@ -23,5 +25,6 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Q
         {
             return LampMapper.ToDto(_lampRepository.GetById(id));
         }
-    }
+    }*/
+    public sealed record GetLampByIdQuery(Guid Id) : IRequest<Result<LampDto>>;
 }

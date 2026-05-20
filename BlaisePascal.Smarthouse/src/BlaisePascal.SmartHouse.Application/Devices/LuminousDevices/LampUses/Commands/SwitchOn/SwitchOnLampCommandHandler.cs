@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.SwitchOn
 {
-    public sealed class SwitchOnLampCommandHandler: IRequestHandler<SwitchOnLampCommand, Result<Guid>>
+    public sealed class SwitchOnLampCommandHandler : IRequestHandler<SwitchOnLampCommand, Result<Guid>>
     {
         private readonly ILampRepository _lampRepository;
         public SwitchOnLampCommandHandler(ILampRepository lampRepository)
@@ -29,4 +29,5 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.C
             _lampRepository.Update(lamp);
             return Task.FromResult(Result.Success<Guid>(lamp.Id));
         }
+    }
 }
