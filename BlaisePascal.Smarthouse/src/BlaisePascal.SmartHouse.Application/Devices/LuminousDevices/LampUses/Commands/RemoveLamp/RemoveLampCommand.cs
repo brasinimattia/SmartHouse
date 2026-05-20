@@ -1,4 +1,6 @@
 ﻿using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository;
+using BlaisePascal.SmartHouse.SharedKernel;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.RemoveLamp
 {
-    public class RemoveLampCommand
+    /*public class RemoveLampCommand
     {
         private readonly ILampRepository _lampRepository;
 
@@ -20,5 +22,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.C
         {
             _lampRepository.Remove(id);
         }
-    }
+    }*/
+
+    public sealed record RemoveLampCommand(Guid Id) : IRequest<Result<Guid>>;
 }

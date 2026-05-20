@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command
+namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.AddDoor
 {
     public class AddDoorCommand
     {

@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediatR;
+using BlaisePascal.SmartHouse.SharedKernel;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.SwitchOff
 {
-    public class SwitchOffLampCommand
+    /*public class SwitchOffLampCommand
     {
         private readonly ILampRepository _lampRepository;
 
@@ -26,5 +28,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.C
                 _lampRepository.Update(lamp);
             }
         }
-    }
+    }*/
+
+    public sealed record SwitchOffLampCommand(Guid Id) : IRequest<Result<Guid>>;
 }

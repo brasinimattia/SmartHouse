@@ -1,5 +1,7 @@
 ﻿using BlaisePascal.SmartHouse.Domain.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository;
+using BlaisePascal.SmartHouse.SharedKernel;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands
 {
-    public class IncreaseBrightnessLampCommand
+    /*public class IncreaseBrightnessLampCommand
     {
         private readonly ILampRepository _lampRepository;
 
@@ -26,5 +28,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.C
                 _lampRepository.Update(lamp);
             }
         }
-    }
+    }*/
+
+    public sealed record IncreaseBrightnessLampCommand(Guid Id) : IRequest<Result<Guid>>;
 }

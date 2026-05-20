@@ -20,10 +20,9 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.C
         public Task<Result<Guid>> Handle(ChangeBrightnessLampCommand request, CancellationToken cancellationToken)
         {
             var lamp = _lampRepository.GetById(request.Id);
-            //if (lamp == null)
-                //TO DO : create error for not found lamp
-                //return Task.FromResult(Result.Failure<Guid>());
-                var result = lamp.ChangeBrightness(request.Amount);
+            if (lamp == null)
+                return Task.FromResult(Result.Failure<Guid>(Error.NullValue));
+            var result = lamp.ChangeBrightness(request.Amount);
             if(result.IsFailure)
             {
                 return Task.FromResult(Result.Failure<Guid>(result.Error));

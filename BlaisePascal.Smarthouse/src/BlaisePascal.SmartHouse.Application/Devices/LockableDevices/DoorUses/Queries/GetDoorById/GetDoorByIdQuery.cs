@@ -1,5 +1,4 @@
-﻿
-using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Dto;
+﻿using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Dto;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Mapper;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice.Repository;
@@ -9,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Queries
+namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Queries.GetDoorById
 {
     public class GetDoorByIdQuery
     {
