@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands
+namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.SwitchOnCCTV
 {
-    public class ToggleCCTVCommand
+    public class SwitchOnCCTVCommand
     {
         private readonly ICCTVRepository _cctvRepository;
 
-        public ToggleCCTVCommand(ICCTVRepository cctvRepsotitory)
+        public SwitchOnCCTVCommand(ICCTVRepository cctvRepsotitory)
         {
             _cctvRepository = cctvRepsotitory;
         }
@@ -20,9 +20,9 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.C
         public void Execute(Guid id)
         {
             CCTV cctv = _cctvRepository.GetById(id);
-            if(cctv != null)
+            if (cctv != null)
             {
-                cctv.Toggle();
+                cctv.SwitchOn();
                 _cctvRepository.Update(cctv);
             }
         }

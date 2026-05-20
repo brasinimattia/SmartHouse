@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands
+namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.StopRecordingCCTV
 {
-    public class StartRecordingCCTVCommand
+    public class StopRecordingCCTVCommand
     {
         private readonly ICCTVRepository _cctvRepository;
 
-        public StartRecordingCCTVCommand(ICCTVRepository cctvRepsotitory)
+        public StopRecordingCCTVCommand(ICCTVRepository cctvRepsotitory)
         {
             _cctvRepository = cctvRepsotitory;
         }
@@ -22,7 +22,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.C
             CCTV cctv = _cctvRepository.GetById(id);
             if (cctv != null)
             {
-                cctv.StartRecording();
+                cctv.StopRecording();
                 _cctvRepository.Update(cctv);
             }
         }

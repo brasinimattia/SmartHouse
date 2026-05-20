@@ -6,23 +6,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands
+namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.StartRecordingCCTV
 {
-    public class LockCCTVCommand
+    public class StartRecordingCCTVCommand
     {
         private readonly ICCTVRepository _cctvRepository;
 
-        public LockCCTVCommand(ICCTVRepository cctvRepsotitory)
+        public StartRecordingCCTVCommand(ICCTVRepository cctvRepsotitory)
         {
             _cctvRepository = cctvRepsotitory;
         }
 
-        public void Execute(Guid id, string key)
+        public void Execute(Guid id)
         {
             CCTV cctv = _cctvRepository.GetById(id);
             if (cctv != null)
             {
-                cctv.Lock(key);
+                cctv.StartRecording();
                 _cctvRepository.Update(cctv);
             }
         }
