@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice;
+using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice.Repository;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice.Repository;
 
-namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command
+namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.SwitchOffDoor
 {
-    public class SwitchOnDoorCommand
+    public class SwitchOffDoorCommand
     {
         private readonly IDoorRepository _doorRepository;
 
-        public SwitchOnDoorCommand(IDoorRepository doorRepsotitory)
+        public SwitchOffDoorCommand(IDoorRepository doorRepsotitory)
         {
             _doorRepository = doorRepsotitory;
         }
@@ -22,7 +24,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.C
             Door door = _doorRepository.GetById(id);
             if (door != null)
             {
-                door.SwitchOn();
+                door.SwitchOff();
                 _doorRepository.Update(door);
             }
         }

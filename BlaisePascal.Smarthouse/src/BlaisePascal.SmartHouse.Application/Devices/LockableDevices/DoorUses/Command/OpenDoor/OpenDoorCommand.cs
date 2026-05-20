@@ -5,23 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command
+namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.OpenDoor
 {
-    public class LockDoorCommand
+    public class OpenDoorCommand
     {
         private readonly IDoorRepository _doorRepository;
 
-        public LockDoorCommand(IDoorRepository doorRepository)
+        public OpenDoorCommand(IDoorRepository doorRepository)
         {
             _doorRepository = doorRepository;
         }
 
-        public void Execute(Guid id, string key)
+        public void Execute(Guid id)
         {
             var door = _doorRepository.GetById(id);
             if (door != null)
             {
-                door.Lock(key);
+                door.Open();
                 _doorRepository.Update(door);
             }
         }
