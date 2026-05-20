@@ -31,4 +31,5 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.C
     }*/
 
     public sealed record ChangeBrightnessLampCommand(Guid Id, int Amount) : IRequest<Result<Guid>>;
+
 }

@@ -41,6 +41,10 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
             var result = base.SwitchOn();
             if (result.IsFailure)
                 return result;
+
+           /*var brightnessResult = Brightness.Create(Brightness.Min);
+            if (brightnessResult.IsFailure)
+                return Result.Failure(brightnessResult.Error);*/
             Raise(new DeviceSwitchedOnEvent(Id));
             Touch();
 
