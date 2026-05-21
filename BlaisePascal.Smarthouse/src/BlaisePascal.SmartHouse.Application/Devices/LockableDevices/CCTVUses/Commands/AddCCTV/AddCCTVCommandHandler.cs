@@ -11,9 +11,9 @@ using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.AddCCTV
 {
-    public class AddCCTVCommandHandler : IRequestHandler<AddCCTVCommand, Result<Guid>>
+    public sealed class AddCCTVCommandHandler : IRequestHandler<AddCCTVCommand, Result<Guid>>
     {
-        public readonly ICCTVRepository _cctvRepository;
+        private readonly ICCTVRepository _cctvRepository;
 
         public AddCCTVCommandHandler(ICCTVRepository cctvRepository)
         {

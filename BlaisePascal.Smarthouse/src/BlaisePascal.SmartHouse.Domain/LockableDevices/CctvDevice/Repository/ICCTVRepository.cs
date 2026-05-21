@@ -11,8 +11,8 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice.Repository
     public interface ICCTVRepository
     {
         Result Add(CCTV cctv);
-        void Update(CCTV cctv);
-        void Remove(Guid id);
+        Result Update(CCTV cctv);
+        Result Remove(Guid id);
         CCTV GetById(Guid id);
         List<CCTV> GetAll();
     }
