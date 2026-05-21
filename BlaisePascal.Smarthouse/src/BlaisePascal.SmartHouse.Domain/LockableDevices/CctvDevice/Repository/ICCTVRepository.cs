@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlaisePascal.SmartHouse.SharedKernel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice.Repository
 {
     public interface ICCTVRepository
     {
-        void Add(CCTV cctv);
+        Result Add(CCTV cctv);
         void Update(CCTV cctv);
         void Remove(Guid id);
         CCTV GetById(Guid id);
