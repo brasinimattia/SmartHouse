@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.lockCCTV
 {
     public sealed record LockCCTVCommand(Guid Id, string key) : IRequest<Result<Guid>>;
+
     //public class LockCCTVCommand
     //{
     //    private readonly ICCTVRepository _cctvRepository;

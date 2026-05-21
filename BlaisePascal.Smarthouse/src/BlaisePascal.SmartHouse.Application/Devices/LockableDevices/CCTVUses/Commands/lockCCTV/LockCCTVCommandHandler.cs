@@ -16,10 +16,10 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.lockCCTV
 {
-    public sealed class LockCCTVComanndHandler : IRequestHandler<LockCCTVCommand, Result<Guid>>
+    public sealed class LockCCTVCommandHandler : IRequestHandler<LockCCTVCommand, Result<Guid>>
     {
         private readonly ICCTVRepository _cctvRepository;
-        public LockCCTVComanndHandler(ICCTVRepository cctvRepository)
+        public LockCCTVCommandHandler(ICCTVRepository cctvRepository)
         {
             _cctvRepository = cctvRepository;
         }
