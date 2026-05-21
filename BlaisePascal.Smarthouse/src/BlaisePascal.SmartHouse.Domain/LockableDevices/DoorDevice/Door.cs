@@ -122,12 +122,13 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice
         }
 
 
-        public void SetPassword(string password)
+        public Result SetPassword(string password)
         {
             if (string.IsNullOrWhiteSpace(password))
-                throw new ArgumentException("Password cannot be empty or whitespace");
+                return Result.Failure(DoorErrors.CannotSetPassword);
             Password = Password.Create(password);
-            LastModifiedAtUtc = DateTime.Now;
+            Touch();
+            return Result.Success();
         }
 
 

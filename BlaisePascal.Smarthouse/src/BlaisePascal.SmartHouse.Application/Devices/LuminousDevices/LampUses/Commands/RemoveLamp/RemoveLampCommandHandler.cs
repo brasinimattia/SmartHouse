@@ -21,6 +21,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.C
             var lamp = _lampRepository.GetById(request.Id);
             if (lamp == null)
                 return Task.FromResult(Result.Failure<Guid>(Error.NullValue));
+            
             _lampRepository.Remove(request.Id);
             return Task.FromResult(Result.Success<Guid>(request.Id));
         }

@@ -7,10 +7,12 @@ using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice.Repository;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice.Repository;
+using BlaisePascal.SmartHouse.SharedKernel;
+using MediatR;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.SwitchOffDoor
 {
-    public class SwitchOffDoorCommand
+    /*public class SwitchOffDoorCommand
     {
         private readonly IDoorRepository _doorRepository;
 
@@ -28,5 +30,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.C
                 _doorRepository.Update(door);
             }
         }
-    }
+    }*/
+
+    public sealed record SwitchOffDoorCommand(Guid id): IRequest<Result<Guid>>;
 }

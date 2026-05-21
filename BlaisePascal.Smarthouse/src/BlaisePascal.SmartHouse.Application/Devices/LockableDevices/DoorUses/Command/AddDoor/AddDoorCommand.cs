@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediatR;
+using BlaisePascal.SmartHouse.SharedKernel;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.AddDoor
 {
-    public class AddDoorCommand
+   /* public class AddDoorCommand
     {
         private readonly IDoorRepository _doorRepository;
 
@@ -21,5 +23,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.C
         {
             _doorRepository.Add(new Door(doorName));
         }
-    }
+    }*/
+
+    public sealed record AddDoorCommand(string doorName): IRequest<Result<Guid>>;
 }

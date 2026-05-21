@@ -2,6 +2,8 @@
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Mapper;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice.Repository;
+using BlaisePascal.SmartHouse.SharedKernel;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Queries.GetAllDoor
 {
-    public class GetAllDoorQuery
+    /*public class GetAllDoorQuery
     {
         private readonly IDoorRepository _doorRepository;
     
@@ -33,5 +35,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Q
 
             return result;
         }
-    }
+    }*/
+
+    public sealed record GetAllDoorQuery: IRequest<Result<List<DoorDto>>>;
 }

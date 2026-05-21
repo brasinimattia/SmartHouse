@@ -1,4 +1,6 @@
 ﻿using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice.Repository;
+using BlaisePascal.SmartHouse.SharedKernel;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.CloseDoor
 {
-    public class CloseDoorCommand
+    /*public class CloseDoorCommand
     {
         private readonly IDoorRepository _doorRepository;
 
@@ -25,6 +27,8 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.C
                 _doorRepository.Update(door);
             }
         }
-    }
+    }*/
+
+    public sealed record CloseDoorCommand(Guid id): IRequest<Result<Guid>>;
 }
 
