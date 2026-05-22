@@ -18,11 +18,15 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.C
         }
         public Task<Result<Guid>> Handle(RemoveLampCommand request, CancellationToken cancellationToken)
         {
-            var lamp = _lampRepository.GetById(request.Id);
+            var lamp = _lampRepository.GetById(request.Id).Value;
             if (lamp == null)
                 return Task.FromResult(Result.Failure<Guid>(Error.NullValue));
             
-            _lampRepository.Remove(request.Id);
+            var result = _lampRepository.Remove(request.Id);
+            if (result.IsFailure)
+            {
+                return Task.FromResult(Result.Failure<Guid>(result.Error));
+            }
             return Task.FromResult(Result.Success<Guid>(request.Id));
         }
     }
