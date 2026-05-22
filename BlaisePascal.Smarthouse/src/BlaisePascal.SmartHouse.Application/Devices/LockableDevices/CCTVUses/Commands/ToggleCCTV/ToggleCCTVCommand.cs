@@ -19,7 +19,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.C
 
         public void Execute(Guid id)
         {
-            CCTV cctv = _cctvRepository.GetById(id);
+            CCTV cctv = _cctvRepository.GetById(id).Value;
             if(cctv != null)
             {
                 cctv.Toggle();

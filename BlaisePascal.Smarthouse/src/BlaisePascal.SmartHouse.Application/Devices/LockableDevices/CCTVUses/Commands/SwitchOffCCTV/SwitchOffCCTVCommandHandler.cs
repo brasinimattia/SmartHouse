@@ -20,7 +20,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.C
         }
         public Task<Result<Guid>> Handle(SwitchOffCCTVCommand request, CancellationToken cancellationToken)
         {
-            var lamp = _cctvRepository.GetById(request.Id);
+            var lamp = _cctvRepository.GetById(request.Id).Value;
             if (lamp == null)
                 return Task.FromResult(Result.Failure<Guid>(Error.NullValue));
             var result = lamp.SwitchOff();

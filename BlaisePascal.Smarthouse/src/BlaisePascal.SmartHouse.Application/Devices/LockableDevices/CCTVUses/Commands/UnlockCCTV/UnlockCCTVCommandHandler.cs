@@ -19,7 +19,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.C
         }
         public Task<Result<Guid>> Handle(UnlockCCTVCommand request, CancellationToken cancellationToken)
         {
-            var cctv = _cctvRepository.GetById(request.Id);
+            var cctv = _cctvRepository.GetById(request.Id).Value;
             if (cctv == null)
                 return Task.FromResult(Result.Failure<Guid>(Error.NullValue));
             var result = cctv.Unlock(request.key);
