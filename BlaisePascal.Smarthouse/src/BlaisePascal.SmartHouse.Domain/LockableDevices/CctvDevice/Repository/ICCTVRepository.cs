@@ -13,7 +13,7 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice.Repository
         Result Add(CCTV cctv);
         Result Update(CCTV cctv);
         Result Remove(Guid id);
-        CCTV GetById(Guid id);
-        List<CCTV> GetAll();
+        Result<CCTV> GetById(Guid id);
+        Result<List<CCTV>> GetAll();
     }
 }
