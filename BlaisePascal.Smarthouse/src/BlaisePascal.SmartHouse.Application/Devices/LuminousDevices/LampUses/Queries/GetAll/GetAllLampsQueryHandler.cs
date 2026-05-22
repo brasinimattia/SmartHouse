@@ -20,7 +20,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Q
         }
         public Task<Result<List<LampDto>>> Handle(GetAllLampsQuery request, CancellationToken cancellationToken)
         {
-            var lamps = _lampRepository.GetAll();
+            var lamps = _lampRepository.GetAll().Value;
             var lampDtos = new List<LampDto>();
             if (lamps == null)
                 return Task.FromResult(Result.Failure<List<LampDto>>(Error.NullValue));

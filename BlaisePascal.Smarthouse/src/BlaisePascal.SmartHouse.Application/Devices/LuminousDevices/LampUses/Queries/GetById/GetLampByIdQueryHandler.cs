@@ -23,7 +23,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Q
             var lamp = _lampRepository.GetById(request.Id);
             if (lamp == null)
                 return Task.FromResult(Result.Failure<LampDto>(Error.NullValue));
-            return Task.FromResult(Result.Success<LampDto>(LampMapper.ToDto(lamp)));
+            return Task.FromResult(Result.Success<LampDto>(LampMapper.ToDto(lamp.Value)));
         }
     }
 }

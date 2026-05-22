@@ -13,7 +13,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository
         Result Add(Lamp lamp);
         Result Update(Lamp lamp);
         Result Remove(Guid id);
-        Lamp GetById(Guid id);
-        List<Lamp> GetAll();
+        Result<Lamp> GetById(Guid id);
+        Result<List<Lamp>> GetAll();
     }
 }
