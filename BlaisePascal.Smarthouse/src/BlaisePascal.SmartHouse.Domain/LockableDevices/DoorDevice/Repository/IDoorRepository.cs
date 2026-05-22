@@ -13,7 +13,7 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice.Repository
         Result Add(Door door);
         Result Update(Door door);
         Result Remove(Guid id);
-        Door GetById(Guid id);
-        List<Door> GetAll();
+        Result<Door> GetById(Guid id);
+        Result<List<Door>> GetAll();
     }
 }

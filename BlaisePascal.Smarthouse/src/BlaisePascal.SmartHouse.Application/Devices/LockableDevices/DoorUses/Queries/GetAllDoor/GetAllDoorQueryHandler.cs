@@ -23,7 +23,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Q
         }
         public Task<Result<List<DoorDto>>> Handle(GetAllDoorQuery request, CancellationToken cancellationToken)
         {
-            var doors = _doorRepository.GetAll();
+            var doors = _doorRepository.GetAll().Value;
             var doorDtos = new List<DoorDto>();
             if (doors == null)
                 return Task.FromResult(Result.Failure<List<DoorDto>>(Error.NullValue));

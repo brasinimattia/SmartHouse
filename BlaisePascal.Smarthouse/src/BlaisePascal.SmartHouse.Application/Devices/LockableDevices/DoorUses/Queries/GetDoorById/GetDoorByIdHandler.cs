@@ -26,7 +26,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Q
             if (door == null)
                 return Task.FromResult(Result.Failure<DoorDto>(Error.NullValue));
             
-            return Task.FromResult(Result.Success<DoorDto>(DoorMapper.ToDto(door)));
+            return Task.FromResult(Result.Success<DoorDto>(DoorMapper.ToDto(door.Value)));
         }
     }
 }
