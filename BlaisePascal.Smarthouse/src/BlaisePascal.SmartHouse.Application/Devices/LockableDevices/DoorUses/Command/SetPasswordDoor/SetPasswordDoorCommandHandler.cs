@@ -18,7 +18,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.C
         }
         public Task<Result<Guid>> Handle(SetPasswordDoorCommand request, CancellationToken cancellationToken)
         {
-            var door = _doorRepository.GetById(request.id);
+            var door = _doorRepository.GetById(request.id).Value;
             if (door == null)
                 return Task.FromResult(Result.Failure<Guid>(Error.NullValue));
 
