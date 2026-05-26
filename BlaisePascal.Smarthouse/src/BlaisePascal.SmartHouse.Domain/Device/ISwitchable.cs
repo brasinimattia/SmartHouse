@@ -11,7 +11,7 @@ namespace BlaisePascal.SmartHouse.Domain.Device
     {
         Result SwitchOn();
         Result SwitchOff();
-        void Toggle();
+        Result Toggle();
         void OnValidator();
     }
 }
