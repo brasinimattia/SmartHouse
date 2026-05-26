@@ -52,7 +52,7 @@ namespace BlaisePascal.SmartHouse.WPF
     /// </summary>
     public partial class App : System.Windows.Application
     {
-        public static IServiceProvider Services { get; private set; }
+        private IServiceProvider _serviceProvider;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -115,11 +115,18 @@ namespace BlaisePascal.SmartHouse.WPF
             services.AddSingleton<CCTVView>();
             services.AddSingleton<MainWindow>();
 
-            Services = services.BuildServiceProvider();
+            // IMPORTANT: copia qui le tue registrazioni esistenti
+            // es. services.AddTransient<Views.LampView>();
+            // registra il ServiceProvider stesso così può essere iniettato
+            services.AddSingleton<IServiceProvider>(sp => sp);
 
-            var mainWindow = Services.GetRequiredService<MainWindow>();
+            // registra MainWindow in DI (così riceve IServiceProvider)
+            services.AddTransient<MainWindow>();
 
-            mainWindow.Show();
+            _serviceProvider = services.BuildServiceProvider();
+
+            var main = _serviceProvider.GetRequiredService<MainWindow>();
+            main.Show();
         }
 
     }

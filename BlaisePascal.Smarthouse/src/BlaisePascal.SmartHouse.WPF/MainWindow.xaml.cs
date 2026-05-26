@@ -27,8 +27,8 @@ namespace BlaisePascal.SmartHouse.WPF
         public MainWindow(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            LoadDefaultView();
             _serviceProvider = serviceProvider;
+            LoadDefaultView();
         }
         private void LoadDefaultView()
         {
