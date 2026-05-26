@@ -13,10 +13,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.AddDoor;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.CloseDoor;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.LockDoor;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.OpenDoor;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.RemoveDoor;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.SetPasswordDoor;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Dto;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Queries;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Queries.GetAllDoor;
+using BlaisePascal.SmartHouse.Domain.abstraction;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice.Repository;
 using BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lockable.Doors.InMemory;
+using MediatR;
 
 namespace BlaisePascal.SmartHouse.WPF.Views
 {
@@ -25,24 +34,30 @@ namespace BlaisePascal.SmartHouse.WPF.Views
     /// </summary>
     public partial class DoorView : UserControl
     {
-        static IDoorRepository _doorRepository;
+        private readonly IMediator _mediator;
 
         private DoorDto SelectedDoor { get; set; } = null;
 
-        public DoorView()
+        public DoorView(IMediator mediator)
         {
             InitializeComponent();
-            _doorRepository = new InMemoryDoorRepository();
+            _mediator = mediator;
             //RefreshDoorList();
         }
 
-        private void RefreshDoorList()
+        private async void RefreshDoorList()
         {
             var selectedId = SelectedDoor?.Id;
             DoorList.Items.Clear();
 
-            var doors = new GetAllDoorQuery(_doorRepository).Execute();
-            foreach (var door in doors)
+            var result = await _mediator.Send(new GetAllDoorQuery());
+
+            if (result.IsFailure)
+            {
+                MessageBox.Show(result.Error.Code, "Error in locking door");
+                return;
+            }
+            foreach (var door in result.Value)
             {
                 DoorList.Items.Add(door);
                 if (door.Id == selectedId)
@@ -50,7 +65,7 @@ namespace BlaisePascal.SmartHouse.WPF.Views
             }
         }
 
-        private void DoorList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void DoorList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (DoorList.SelectedItem is DoorDto door)
             {
@@ -59,7 +74,7 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
         // ADD DOOR
-        private void AddDoor_Click(object sender, RoutedEventArgs e)
+        private async void AddDoor_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -70,7 +85,13 @@ namespace BlaisePascal.SmartHouse.WPF.Views
                     return;
                 }
 
-                new AddDoorCommand(_doorRepository).Execute(name);
+                var result = await _mediator.Send(new AddDoorCommand(name));
+
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in adding door");
+                    return;
+                }
 
                 NewDoorNameTextBox.Clear();
                 RefreshDoorList();
@@ -82,12 +103,18 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
         // OPEN DOOR
-        private void Open_Click(object sender, RoutedEventArgs e)
+        private async void Open_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (SelectedDoor == null) return;
-                new OpenDoorCommand(_doorRepository).Execute(SelectedDoor.Id);
+                var result = await _mediator.Send(new OpenDoorCommand(SelectedDoor.Id));
+
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in opening door");
+                    return;
+                }
                 RefreshDoorList();
             }
             catch (Exception ex)
@@ -97,12 +124,18 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
         // CLOSE DOOR
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private async void Close_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (SelectedDoor == null) return;
-                new CloseDoorCommand(_doorRepository).Execute(SelectedDoor.Id);
+                var result = await _mediator.Send(new CloseDoorCommand(SelectedDoor.Id));
+
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in closing door");
+                    return;
+                }
                 RefreshDoorList();
             }
             catch (Exception ex)
@@ -112,13 +145,19 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
         // LOCK DOOR
-        private void Lock_Click(object sender, RoutedEventArgs e)
+        private async void Lock_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (SelectedDoor == null) return;
                 string key = DoorPasswordBox.Password; // Legge dal PasswordBox della UI
-                new LockDoorCommand(_doorRepository).Execute(SelectedDoor.Id, key);
+                var result = await _mediator.Send(new LockDoorCommand(SelectedDoor.Id, key));
+
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in locking door");
+                    return;
+                }
                 RefreshDoorList();
             }
             catch (Exception ex)
@@ -128,13 +167,19 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
         // UNLOCK DOOR
-        private void Unlock_Click(object sender, RoutedEventArgs e)
+        private async void Unlock_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (SelectedDoor == null) return;
                 string key = DoorPasswordBox.Password;
-                new UnlockDoorCommand(_doorRepository).Execute(SelectedDoor.Id, key);
+                var result = await _mediator.Send(new LockDoorCommand(SelectedDoor.Id, key));
+
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in unlocking door");
+                    return;
+                }
                 RefreshDoorList();
             }
             catch (Exception ex)
@@ -144,7 +189,7 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
         // SET PASSWORD
-        private void SetPassword_Click(object sender, RoutedEventArgs e)
+        private async void SetPassword_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -157,7 +202,13 @@ namespace BlaisePascal.SmartHouse.WPF.Views
                     return;
                 }
 
-                new SetPasswordDoorCommand(_doorRepository).Execute(SelectedDoor.Id, key);
+                var result = await _mediator.Send(new SetPasswordDoorCommand(SelectedDoor.Id, key));
+
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in setting new password");
+                    return;
+                }
                 DoorPasswordBox.Clear();
                 RefreshDoorList();
             }
@@ -168,12 +219,18 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
         // REMOVE DOOR
-        private void Remove_Click(object sender, RoutedEventArgs e)
+        private async void Remove_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (SelectedDoor == null) return;
-                new RemoveDoorCommand(_doorRepository).Execute(SelectedDoor.Id);
+                var result = await _mediator.Send(new RemoveDoorCommand(SelectedDoor.Id));
+
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in removing door");
+                    return;
+                }
                 SelectedDoor = null;
                 RefreshDoorList();
             }

@@ -9,26 +9,26 @@
   },
   {
     "Name": "Blu",
-    "Status": "OFF",
+    "Status": "ON",
     "Brightness": 1,
     "Id": "6100e9f3-a9f8-4807-899f-f9b13a656fe7",
     "CreatedAtUtc": "2026-04-23T13:32:35.5668731+02:00",
-    "LastModifiedAtUtc": "2026-04-29T10:51:54.1467414+02:00"
+    "LastModifiedAtUtc": "2026-05-26T16:07:57.3337041+02:00"
   },
   {
     "Name": "Verde",
-    "Status": "OFF",
+    "Status": "ON",
     "Brightness": 74,
     "Id": "becfbcda-d390-423c-8e96-8645fbb010c6",
     "CreatedAtUtc": "2026-04-23T13:32:40.1094467+02:00",
-    "LastModifiedAtUtc": "2026-04-29T10:51:57.6823272+02:00"
+    "LastModifiedAtUtc": "2026-05-26T16:07:54.8167627+02:00"
   },
   {
     "Name": "Yes",
-    "Status": "ON",
+    "Status": "OFF",
     "Brightness": 58,
     "Id": "58ac8cc5-d773-4e09-bcab-7ec97119ad1b",
     "CreatedAtUtc": "2026-04-29T10:53:13.7071051+02:00",
-    "LastModifiedAtUtc": "2026-04-29T10:53:13.7283013+02:00"
+    "LastModifiedAtUtc": "2026-05-26T16:08:00.251895+02:00"
   }
 ]

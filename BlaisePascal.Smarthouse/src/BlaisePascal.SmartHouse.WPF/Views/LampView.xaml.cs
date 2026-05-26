@@ -1,14 +1,4 @@
-﻿using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands;
-using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.AddLamp;
-using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.ChangeBrightness;
-using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.RemoveLamp;
-using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.SwitchOff;
-using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.SwitchOn;
-using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Dto;
-using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Queries;
-using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository;
-using BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lightning.Lamps.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.AddLamp;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.ChangeBrightness;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.RemoveLamp;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.SwitchOff;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Commands.SwitchOn;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Dto;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Queries;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Queries.GetAll;
+using BlaisePascal.SmartHouse.Domain.abstraction;
+using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository;
+using BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lightning.Lamps.Json;
+using MediatR;
 
 namespace BlaisePascal.SmartHouse.WPF.Views
 {
@@ -30,24 +34,24 @@ namespace BlaisePascal.SmartHouse.WPF.Views
     /// </summary>
     public partial class LampView : UserControl
     {
-        static ILampRepository _lampRepository;
+        private readonly IMediator _mediator;
 
         private LampDto SelectedLamp { get; set; } = null;
 
-        public LampView()
+        public LampView(IMediator mediator)
         {
             InitializeComponent();
-            _lampRepository = new JsonLampRepository();
+            _mediator = mediator;
             RefreshLampList();
         }
 
-        private void RefreshLampList()
+        private async void RefreshLampList()
         {
             var selectedId = SelectedLamp?.Id;
             LampList.Items.Clear();
 
-            var lamps = new GetAllLampsQuery(_lampRepository).Execute();
-            foreach (var lamp in lamps)
+            var result = await _mediator.Send(new GetAllLampsQuery());
+            foreach (var lamp in result.Value)
             {
                 LampList.Items.Add(lamp);
                 if (lamp.Id == selectedId)
@@ -56,13 +60,18 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
 
-        private void LampList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void LampList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index = LampList.SelectedIndex;
-            var lamps = new GetAllLampsQuery(_lampRepository).Execute();
+            var result = await _mediator.Send(new GetAllLampsQuery());
+            if (result.IsFailure)
+            {
+                MessageBox.Show(result.Error.Code, "Error in getting lamps");
+                return;
+            }
 
-            if (index >= 0 && index < lamps.Count)
-                SelectedLamp = lamps[index];
+            if (index >= 0 && index < result.Value.Count)
+                SelectedLamp = result.Value[index];
         }
 
         //CHANGE BRIGHTNESS VIA SLIDER
@@ -73,7 +82,7 @@ namespace BlaisePascal.SmartHouse.WPF.Views
 
 
         // ADD LAMP
-        private void Add_Click(object sender, RoutedEventArgs e)
+        private async void Add_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -84,18 +93,20 @@ namespace BlaisePascal.SmartHouse.WPF.Views
                     return;
                 }
 
-                new AddLampCommand(_lampRepository).Execute(name);
+                var result = await _mediator.Send(new AddLampCommand(name));
 
-                if (int.TryParse(NewLampIntensityTextBox.Text.Trim(), out int intensity))
+                if(result.IsFailure)
                 {
-                    var addedLamp = new GetAllLampsQuery(_lampRepository).Execute().Last();
-                    new SwitchOnLampCommand(_lampRepository).Execute(addedLamp.Id);
-                    new ChangeBrightnessLampCommand(_lampRepository).Execute(addedLamp.Id, intensity);
+                    MessageBox.Show(result.Error.Code, "Error adding lamp");
+                    return;
                 }
+
+                RefreshLampList();
+
 
                 NewLampNameTextBox.Clear();
                 NewLampIntensityTextBox.Clear();
-                RefreshLampList();
+                
             }
             catch (Exception ex)
             {
@@ -104,12 +115,20 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
         // SWITCH ON
-        private void On_Click(object sender, RoutedEventArgs e)
+        private async void On_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (SelectedLamp == null) return;
-                new SwitchOnLampCommand(_lampRepository).Execute(SelectedLamp.Id);
+
+                var result = await _mediator.Send(new SwitchOnLampCommand(SelectedLamp.Id));
+
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error switching on lamp");
+                    return;
+                }
+
                 RefreshLampList();
             }
             catch (Exception ex)
@@ -119,12 +138,18 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
         // SWITCH OFF
-        private void Off_Click(object sender, RoutedEventArgs e)
+        private async void Off_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (SelectedLamp == null) return;
-                new SwitchOffLampCommand(_lampRepository).Execute(SelectedLamp.Id);
+                var result = await _mediator.Send(new SwitchOnLampCommand(SelectedLamp.Id));
+
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error switching off lamp");
+                    return;
+                }
+
                 RefreshLampList();
             }
             catch (Exception ex)
@@ -134,13 +159,18 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
         // SET BRIGHTNESS
-        private void ApplyIntensity_Click(object sender, RoutedEventArgs e)
+        private async void ApplyIntensity_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (SelectedLamp != null)
                 {
-                    new ChangeBrightnessLampCommand(_lampRepository).Execute(SelectedLamp.Id, (int)BrightnessSlider.Value);
+                    var result = await _mediator.Send(new ChangeBrightnessLampCommand(SelectedLamp.Id, (int)BrightnessSlider.Value));
+                    if (result.IsFailure)
+                    {
+                        MessageBox.Show(result.Error.Code, "Error changing lamp's brightness");
+                        return;
+                    }
                     RefreshLampList();
                 }
             }
@@ -151,12 +181,19 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
         // REMOVE LAMP
-        private void Remove_Click(object sender, RoutedEventArgs e)
+        private async void Remove_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (SelectedLamp == null) return;
-                new RemoveLampCommand(_lampRepository).Execute(SelectedLamp.Id);
+                var result = await _mediator.Send(new RemoveLampCommand(SelectedLamp.Id));
+
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error removing lamp");
+                    return;
+                }
+
                 SelectedLamp = null;
                 RefreshLampList();
             }
@@ -167,19 +204,29 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         }
 
         // SORT LAMPS BY NAME
-        private void Sort_Click(object sender, RoutedEventArgs e)
+        private async void Sort_Click(object sender, RoutedEventArgs e)
         {
-            var lamps = new GetAllLampsQuery(_lampRepository).Execute();
-            var sortedLamps = lamps.OrderBy(l => l.Name).ToList();
+            var result = await _mediator.Send(new GetAllLampsQuery());
+            if (result.IsFailure)
+            {
+                MessageBox.Show(result.Error.Code, "Error in getting lamps");
+                return;
+            }
+            var sortedLamps = result.Value.OrderBy(l => l.Name).ToList();
             LampList.Items.Clear();
             foreach (var lamp in sortedLamps)
                 LampList.Items.Add(lamp);
         }
 
-        private void Sort_Click_ByIntensity(object sender, RoutedEventArgs e)
+        private async void Sort_Click_ByIntensity(object sender, RoutedEventArgs e)
         {
-            var lamps = new GetAllLampsQuery(_lampRepository).Execute();
-            var sortedLamps = lamps.OrderByDescending(l => l.Brightness).ToList();
+            var result = await _mediator.Send(new GetAllLampsQuery());
+            if (result.IsFailure)
+            {
+                MessageBox.Show(result.Error.Code, "Error in getting lamps");
+                return;
+            }
+            var sortedLamps = result.Value.OrderByDescending(l => l.Brightness).ToList();
             LampList.Items.Clear();
             foreach (var lamp in sortedLamps)
                 LampList.Items.Add(lamp);
