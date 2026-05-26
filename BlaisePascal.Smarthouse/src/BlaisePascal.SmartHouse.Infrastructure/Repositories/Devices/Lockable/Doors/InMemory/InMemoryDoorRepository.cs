@@ -1,6 +1,7 @@
 ﻿
 using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice.Repository;
+using BlaisePascal.SmartHouse.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,33 +20,37 @@ namespace BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lockable.D
                 new Door("Door1")
             };
         }
-        public List<Door> GetAll()
+        public Result<List<Door>> GetAll()
         {
             return _doors;
         }
 
-        public Door GetById(Guid id)
+        public Result<Door> GetById(Guid id)
         {
             return _doors.First(l => l.Id == id);
         }
 
-        public void Add(Door door)
+        public Result Add(Door door)
         {
             if (door == null)
-                throw new ArgumentNullException(nameof(door));
+                return Result.Failure(Error.NullValue);
             _doors.Add(door);
+            return Result.Success();
         }
 
-        public void Remove(Guid id)
+        public Result Remove(Guid id)
         {
-            Door door = GetById(id);
+            Door door = GetById(id).Value;
             if (door != null)
-                _doors.Remove(door);
+                return Result.Failure(Error.NullValue);
+            _doors.Remove(door);
+            return Result.Success();
         }
 
-        public void Update(Door door)
+        public Result Update(Door door)
         {
             //Todo: implement update logic
+            return null;
         }
     }
 }

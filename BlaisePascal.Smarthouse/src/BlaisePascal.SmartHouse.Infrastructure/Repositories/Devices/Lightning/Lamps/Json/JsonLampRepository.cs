@@ -8,6 +8,7 @@ using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Dto;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.LampUses.Mappers;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repository;
+using BlaisePascal.SmartHouse.SharedKernel;
 
 namespace BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lightning.Lamps.Json
 {
@@ -29,41 +30,46 @@ namespace BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lightning.
             }
         }
 
-        public List<Lamp> GetAll()
+        public Result<List<Lamp>> GetAll()
         {
             return Load();
         }
 
-        public Lamp GetById(Guid id)
+        public Result<Lamp> GetById(Guid id)
         {
             return Load().First(l => l.Id == id);
         }
 
-        public void Add(Lamp lamp)
+        public Result Add(Lamp lamp)
         {
+            if (lamp is null)
+                return Result.Failure(Error.NullValue);
             var lamps = Load();
             lamps.Add(lamp);
             Save(lamps);
+            return Result.Success();
+
         }
 
-        public void Update(Lamp lamp)
+        public Result Update(Lamp lamp)
         {
             var lamps = Load();
 
             var index = lamps.FindIndex(l => l.Id == lamp.Id);
             if (index == -1)
-                throw new Exception("Lamp not found");
-
+                return Result.Failure(Error.NotFound("LampJson.NotFound","The lamp with the specified ID was not found."));
             lamps[index] = lamp;
             Save(lamps);
+            return Result.Success();
         }
 
-        public void Remove(Guid id)
+        public Result Remove(Guid id)
         {
             var lamps = Load();
             var lamp = lamps.First(l => l.Id == id);
             lamps.Remove(lamp);
             Save(lamps);
+            return Result.Success();
         }
 
         private List<Lamp> Load()
