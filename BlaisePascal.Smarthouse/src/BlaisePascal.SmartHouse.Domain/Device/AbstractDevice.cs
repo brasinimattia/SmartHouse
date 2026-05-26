@@ -65,13 +65,14 @@ namespace BlaisePascal.SmartHouse.Domain.Device
                 throw new Exception("The device is off");
             
         }
-        public virtual void Toggle()
+        public virtual Result Toggle()
         {
             if (Status == DeviceStatus.On)
                 SwitchOff();
             else
                 SwitchOn();
-            LastModifiedAtUtc = DateTime.Now;
+            return Result.Success();
+            Touch();
         }
 
         public virtual Result SwitchOff()

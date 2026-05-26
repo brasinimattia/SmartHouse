@@ -1,41 +1,55 @@
-﻿using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands;
-using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Queries; 
-using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Dto;
-using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice.Repository;
-using BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lockable.CCTVs.InMemory;
-using System;
+﻿using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.AddCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.DetNightModeCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.lockCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.RemoveCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.SetNormalModeCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.SetPasswordCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.StartRecordingCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.StopRecordingCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.SwitchOffCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.SwitchOnCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.ToggleCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.UnlockCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Dto;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Queries; 
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Queries.GetAllCCTV;
+using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice.Repository;
+using BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lockable.CCTVs.InMemory;
+using MediatR;
 
 namespace BlaisePascal.SmartHouse.WPF.Views
 {
     public partial class CCTVView : UserControl
     {
-    
-        static ICCTVRepository _cctvRepository;
+        static IMediator _mediator;
+
         private CCTVDto SelectedCCTV { get; set; } = null;
 
-        public CCTVView()
+        public CCTVView(IMediator mediator)
         {
             InitializeComponent();
-
-            if (_cctvRepository == null)
-            {
-                _cctvRepository = new InMemoryCCTVRepository();
-            }
-
+            _mediator = mediator;
             //RefreshCctvList();
         }
 
-        private void RefreshCctvList()
+        private async void RefreshCctvList()
         {
             var selectedId = SelectedCCTV?.Id;
             CctvList.Items.Clear();
 
-            var cctvs = new GetAllCCTVQuery(_cctvRepository).Execute();
+            var result = await _mediator.Send(new GetAllCCTVQuery());
+            if (result.IsFailure)
+            {
+                MessageBox.Show(result.Error.Code, "Error in Refreshing CCTV list");
+                return;
+            }
 
-            foreach (var cctv in cctvs)
+            foreach (var cctv in result.Value)
             {
                 CctvList.Items.Add(cctv);
                 if (cctv.Id == selectedId)
@@ -43,31 +57,35 @@ namespace BlaisePascal.SmartHouse.WPF.Views
             }
         }
 
-        private void CctvList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void CctvList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CctvList.SelectedItem is CCTVDto selectedDto)
+            if (CctvList.SelectedItem is CCTVDto cctv)
             {
-                SelectedCCTV = selectedDto;
+                SelectedCCTV = cctv;
             }
         }
 
-        // --- GESTIONE AGGIUNTA E RIMOZIONE ---
-
-        private void Add_Click(object sender, RoutedEventArgs e)
+        // ADD CCTV
+        private async void Add_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 string name = NewCctvNameTextBox.Text.Trim();
-                if (string.IsNullOrWhiteSpace(name) || name == "Device Name")
+                if (string.IsNullOrWhiteSpace(name))
                 {
-                    MessageBox.Show("Insert a valid CCTV name");
+                    MessageBox.Show("Insert a CCTV name");
                     return;
                 }
 
-                new AddCCTVCommand(_cctvRepository).Execute(name);
+                var result = await _mediator.Send(new AddCCTVCommand(name));
 
-                NewCctvNameTextBox.Text = "Device Name";
-                NewCctvNameTextBox.Foreground = System.Windows.Media.Brushes.Gray;
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in Adding CCTV");
+                    return;
+                }
+
+                NewCctvNameTextBox.Clear();
                 RefreshCctvList();
             }
             catch (Exception ex)
@@ -76,13 +94,18 @@ namespace BlaisePascal.SmartHouse.WPF.Views
             }
         }
 
-        private void Remove_Click(object sender, RoutedEventArgs e)
+        // REMOVE CCTV
+        private async void Remove_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (SelectedCCTV == null) return;
-
-                new RemoveCCTVCommand(_cctvRepository).Execute(SelectedCCTV.Id);
+                var result = await _mediator.Send(new RemoveCCTVCommand(SelectedCCTV.Id));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in removing CCTV");
+                    return;
+                }
                 SelectedCCTV = null;
                 RefreshCctvList();
             }
@@ -92,134 +115,263 @@ namespace BlaisePascal.SmartHouse.WPF.Views
             }
         }
 
-        // --- GESTIONE STATO E MODALITA' ---
-
-        private void On_Click(object sender, RoutedEventArgs e)
+        // SWITCH ON
+        private async void On_Click(object sender, RoutedEventArgs e)
         {
-            ExecuteDeviceCommand(() => new SwitchOnCCTVCommand(_cctvRepository).Execute(SelectedCCTV.Id));
-        }
-
-        private void Off_Click(object sender, RoutedEventArgs e)
-        {
-            ExecuteDeviceCommand(() => new SwitchOffCCTVCommand(_cctvRepository).Execute(SelectedCCTV.Id));
-        }
-
-        private void Toggle_Click(object sender, RoutedEventArgs e)
-        {
-            ExecuteDeviceCommand(() => new ToggleCCTVCommand(_cctvRepository).Execute(SelectedCCTV.Id));
-        }
-
-        private void NormalMode_Click(object sender, RoutedEventArgs e)
-        {
-            ExecuteDeviceCommand(() => new SetNormalModeCCTVCommand(_cctvRepository).Execute(SelectedCCTV.Id));
-        }
-
-        private void NightMode_Click(object sender, RoutedEventArgs e)
-        {
-            ExecuteDeviceCommand(() => new SetNightModeCCTVCommand(_cctvRepository).Execute(SelectedCCTV.Id));
-        }
-
-        // --- GESTIONE REGISTRAZIONE ---
-
-        private void StartRec_Click(object sender, RoutedEventArgs e)
-        {
-            ExecuteDeviceCommand(() => new StartRecordingCCTVCommand(_cctvRepository).Execute(SelectedCCTV.Id));
-        }
-
-        private void StopRec_Click(object sender, RoutedEventArgs e)
-        {
-            ExecuteDeviceCommand(() => new StopRecordingCCTVCommand(_cctvRepository).Execute(SelectedCCTV.Id));
-        }
-
-        // --- GESTIONE SICUREZZA (LOCK/UNLOCK/PASSWORD) ---
-
-        private void Unlock_Click(object sender, RoutedEventArgs e)
-        {
-            ExecuteDeviceSecurityCommand((key) => new UnlockCCTVCommand(_cctvRepository).Execute(SelectedCCTV.Id, key));
-        }
-
-        private void Lock_Click(object sender, RoutedEventArgs e)
-        {
-            ExecuteDeviceSecurityCommand((key) => new LockCCTVCommand(_cctvRepository).Execute(SelectedCCTV.Id, key));
-        }
-
-        private void SetPassword_Click(object sender, RoutedEventArgs e)
-        {
-            ExecuteDeviceSecurityCommand((key) => new SetPasswordCCTVCommand(_cctvRepository).Execute(SelectedCCTV.Id, key));
-        }
-
-        // --- ORDINAMENTI ---
-
-        private void SortName_Click(object sender, RoutedEventArgs e)
-        {
-            var cctvs = new GetAllCCTVQuery(_cctvRepository).Execute();
-            var sorted = cctvs.OrderBy(c => c.Name).ToList();
-
-            CctvList.Items.Clear();
-            foreach (var cctv in sorted) CctvList.Items.Add(cctv);
-        }
-
-        private void SortStatus_Click(object sender, RoutedEventArgs e)
-        {
-            var cctvs = new GetAllCCTVQuery(_cctvRepository).Execute();
-            var sorted = cctvs.OrderBy(c => c.Status).ToList();
-
-            CctvList.Items.Clear();
-            foreach (var cctv in sorted) CctvList.Items.Add(cctv);
-        }
-
-        // --- METODI HELPER ---
-
-        private void ExecuteDeviceCommand(Action action)
-        {
-            if (SelectedCCTV == null)
-            {
-                MessageBox.Show("Please select a CCTV first.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
             try
             {
-                action();
-                RefreshCctvList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void ExecuteDeviceSecurityCommand(Action<string> action)
-        {
-            if (SelectedCCTV == null)
-            {
-                MessageBox.Show("Please select a CCTV first.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-            try
-            {
-                string key = KeyTextBox.Text.Trim();
-                if (key == "Enter Password/Key") key = ""; // Gestione del placeholder
-
-                action(key);
-                RefreshCctvList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
- 
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBox textBox)
-            {
-                if (textBox.Text == "Device Name" || textBox.Text == "Enter Password/Key")
+                if (SelectedCCTV == null) return;
+                var result = await _mediator.Send(new SwitchOnCCTVCommand(SelectedCCTV.Id));
+                if (result.IsFailure)
                 {
-                    textBox.Text = "";
-                    textBox.Foreground = System.Windows.Media.Brushes.Black;
+                    MessageBox.Show(result.Error.Code, "Error in Switching On CCTV");
+                    return;
                 }
+                RefreshCctvList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // SWITCH OFF
+        private async void Off_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SelectedCCTV == null) return;
+                var result = await _mediator.Send(new SwitchOffCCTVCommand(SelectedCCTV.Id));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in Switching Off CCTV");
+                    return;
+                }
+                RefreshCctvList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // TOGGLE
+        private async void Toggle_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SelectedCCTV == null) return;
+                var result = await _mediator.Send(new ToggleCCTVCommand(SelectedCCTV.Id));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in Toggling CCTV");
+                    return;
+                }
+                RefreshCctvList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // NORMAL MODE
+        private async void NormalMode_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SelectedCCTV == null) return;
+                var result = await _mediator.Send(new SetNormalModeCCTVCommand(SelectedCCTV.Id));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in Setting Normal Mode");
+                    return;
+                }
+                RefreshCctvList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // NIGHT MODE
+        private async void NightMode_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SelectedCCTV == null) return;
+                var result = await _mediator.Send(new SetNightModeCCTVCommand(SelectedCCTV.Id));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in Setting Night Mode");
+                    return;
+                }
+                RefreshCctvList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // START RECORDING
+        private async void StartRec_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SelectedCCTV == null) return;
+                var result = await _mediator.Send(new StartRecordingCCTVCommand(SelectedCCTV.Id));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in Starting Recording");
+                    return;
+                }
+                RefreshCctvList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // STOP RECORDING
+        private async void StopRec_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SelectedCCTV == null) return;
+                var result = await _mediator.Send(new StopRecordingCCTVCommand(SelectedCCTV.Id));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in Stopping Recording");
+                    return;
+                }
+                RefreshCctvList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // LOCK CCTV
+        private async void Lock_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SelectedCCTV == null) return;
+                string key = KeyTextBox.Text.Trim();
+                var result = await _mediator.Send(new LockCCTVCommand(SelectedCCTV.Id, key));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in locking CCTV");
+                    return;
+                }
+                RefreshCctvList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Security Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // UNLOCK CCTV
+        private async void Unlock_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SelectedCCTV == null) return;
+                string key = KeyTextBox.Text.Trim();
+                var result = await _mediator.Send(new UnlockCCTVCommand(SelectedCCTV.Id, key));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in unlocking CCTV");
+                    return;
+                }
+                RefreshCctvList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Security Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // SET PASSWORD
+        private async void SetPassword_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SelectedCCTV == null) return;
+                string key = KeyTextBox.Text.Trim();
+
+                if (string.IsNullOrWhiteSpace(key))
+                {
+                    MessageBox.Show("Password cannot be empty");
+                    return;
+                }
+
+                var result = await _mediator.Send(new SetPasswordCCTVCommand(SelectedCCTV.Id, key));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in setting password");
+                    return;
+                }
+                KeyTextBox.Clear();
+                RefreshCctvList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // SORT BY NAME
+        private async void SortName_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetAllCCTVQuery());
+                if (result.IsFailure) return;
+
+                var sorted = result.Value.OrderBy(c => c.Name).ToList();
+
+                CctvList.Items.Clear();
+                foreach (var cctv in sorted)
+                {
+                    CctvList.Items.Add(cctv);
+                    if (SelectedCCTV != null && cctv.Id == SelectedCCTV.Id)
+                        CctvList.SelectedItem = cctv;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // SORT BY STATUS
+        private async void SortStatus_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetAllCCTVQuery());
+                if (result.IsFailure) return;
+
+                var sorted = result.Value.OrderBy(c => c.Status).ToList();
+
+                CctvList.Items.Clear();
+                foreach (var cctv in sorted)
+                {
+                    CctvList.Items.Add(cctv);
+                    if (SelectedCCTV != null && cctv.Id == SelectedCCTV.Id)
+                        CctvList.SelectedItem = cctv;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
-}
+    }
