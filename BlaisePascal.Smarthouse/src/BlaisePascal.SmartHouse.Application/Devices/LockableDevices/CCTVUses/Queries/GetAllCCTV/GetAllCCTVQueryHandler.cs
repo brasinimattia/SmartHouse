@@ -1,4 +1,6 @@
 ﻿using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Commands.AddCCTV;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Dto;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Mappers;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice.Repository;
 using BlaisePascal.SmartHouse.SharedKernel;
@@ -11,25 +13,27 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Queries.GetAllCCTV
 {
-    //public sealed class GetAllCCTVCommandHandler : IRequestHandler<GetAllCCTVCommand, Result<Guid>>
-    //{
-    //    private readonly ICCTVRepository _cctvRepository;
+    public sealed class GetAllCCTVQueryHandler : IRequestHandler<GetAllCCTVQuery, Result<List<CCTVDto>>>
+    {
+        private readonly ICCTVRepository _cctvRepository;
 
-    //    public GetAllCCTVCommandHandler(ICCTVRepository cctvRepository)
-    //    {
-    //        _cctvRepository = cctvRepository;
-    //    }
+        public GetAllCCTVQueryHandler(ICCTVRepository cctvRepository)
+        {
+            _cctvRepository = cctvRepository;
+        }
 
-    //    public Task<Result<Guid>> Handle(AddCCTVCommand request, CancellationToken cancellationToken)
-    //    {
+        public Task<Result<List<CCTVDto>>> Handle(GetAllCCTVQuery request, CancellationToken cancellationToken)
+        {
+            var cctvs = _cctvRepository.GetAll().Value;
+            var cctvdtos = new List<CCTVDto>();
+            if(cctvs == null)
+                return Task.FromResult(Result.Failure<List<CCTVDto>>(Error.NullValue));
+            foreach (var cctv in cctvs)
+            {
+                cctvdtos.Add(CCTVMapper.ToDto(cctv));
+            }
+            return Task.FromResult(Result.Success(cctvdtos));
 
-    //        var cctv = new CCTV(request.CCTVName);
-    //        var result = _cctvRepository.GetAll();
-
-    //        if (result.IsFailure)
-    //            return Task.FromResult(Result.Failure<Guid>(result.Error));
-
-    //        return Task.FromResult(Result.Success<Guid>(cctv.Id));
-    //    }
-    //}
+        }
+    }
 }

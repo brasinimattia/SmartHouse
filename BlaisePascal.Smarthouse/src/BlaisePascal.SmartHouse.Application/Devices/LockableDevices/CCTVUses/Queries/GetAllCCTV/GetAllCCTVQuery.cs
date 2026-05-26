@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.CCTVUses.Queries.GetAllCCTV
 {
 
-    public sealed record GetAllCCTVCommand(string CCTVName) : IRequest<Result<Guid>>;
+    public sealed record GetAllCCTVQuery: IRequest<Result<List<CCTVDto>>>;
 
     //public class GetAllCCTVQuery
     //{
