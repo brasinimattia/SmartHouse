@@ -50,7 +50,7 @@ namespace BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lockable.D
         public Result Update(Door door)
         {
             //Todo: implement update logic
-            return null;
+            return Result.Success();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.CctvDevice.Repository;
 using BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice;
+using BlaisePascal.SmartHouse.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,33 +22,37 @@ namespace BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.Lockable.C
             };
         }
 
-        public List<CCTV> GetAll()
+        public Result<List<CCTV>> GetAll()
         {
             return _cctvs;
         }
 
-        public CCTV GetById(Guid id)
+        public Result<CCTV> GetById(Guid id)
         {
             return _cctvs.First(c => c.Id == id);
         }
 
-        public void Add(CCTV cctv)
+        public Result Add(CCTV cctv)
         {
             if (cctv == null)
-                throw new ArgumentNullException(nameof(cctv));
+                return Result.Failure(Error.NullValue);
             _cctvs.Add(cctv);
+            return Result.Success();
         }
 
-        public void Remove(Guid id)
+        public Result Remove(Guid id)
         {
-            CCTV cctv = GetById(id);
-            if (cctv != null)
-                _cctvs.Remove(cctv);
+            CCTV cctv = GetById(id).Value;
+            if (cctv == null)
+                return Result.Failure(Error.NullValue);
+            _cctvs.Remove(cctv);
+            return Result.Success();
         }
 
-        public void Update(CCTV cctv)
+        public Result Update(CCTV cctv)
         {
             //To do: implement update logic
+            return Result.Success();
         }
     }
 }
