@@ -2,26 +2,26 @@
   {
     "Name": "Ciao",
     "Id": "c8320b35-2836-4e1b-81c0-c842da740b52",
-    "Status": "ON",
+    "Status": "OFF",
     "Mode": "NORMAL",
     "LockingStatus": "UNKNOWN",
     "IsRecording": false,
     "Password": "NoPassword",
     "PasswordSetted": true,
     "CreatedAtUtc": "2026-05-27T10:05:28.0880142+02:00",
-    "LastModifiedAtUtc": "2026-05-27T08:14:28.552718Z"
+    "LastModifiedAtUtc": "2026-05-27T08:29:28.7917259Z"
   },
   {
     "Name": "Ciao",
     "Id": "b9ec3783-28fb-4ff5-9f49-6bb74bc72d52",
-    "Status": "OFF",
+    "Status": "ON",
     "Mode": "NOMODE",
     "LockingStatus": "UNKNOWN",
     "IsRecording": false,
     "Password": "NoPassword",
     "PasswordSetted": true,
     "CreatedAtUtc": "2026-05-27T10:07:52.4578351+02:00",
-    "LastModifiedAtUtc": "2026-05-27T08:07:52.4578413Z"
+    "LastModifiedAtUtc": "2026-05-27T08:29:33.1371084Z"
   },
   {
     "Name": "Bello",
@@ -33,6 +33,6 @@
     "Password": "NoPassword",
     "PasswordSetted": true,
     "CreatedAtUtc": "2026-05-27T10:14:08.0329609+02:00",
-    "LastModifiedAtUtc": "2026-05-27T08:14:08.0329638Z"
+    "LastModifiedAtUtc": "2026-05-27T08:29:44.6954971Z"
   }
 ]

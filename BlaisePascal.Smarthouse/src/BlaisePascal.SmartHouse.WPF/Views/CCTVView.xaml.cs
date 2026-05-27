@@ -34,7 +34,7 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         {
             InitializeComponent();
             _mediator = mediator;
-            //RefreshCctvList();
+            RefreshCctvList();
         }
 
         private async void RefreshCctvList()

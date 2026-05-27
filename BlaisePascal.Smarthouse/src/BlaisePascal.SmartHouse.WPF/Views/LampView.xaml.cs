@@ -160,6 +160,7 @@ namespace BlaisePascal.SmartHouse.WPF.Views
             {
                 if (SelectedLamp != null)
                 {
+
                     var result = await _mediator.Send(new ChangeBrightnessLampCommand(SelectedLamp.Id, (int)BrightnessSlider.Value));
                     if (result.IsFailure)
                     {

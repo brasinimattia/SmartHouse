@@ -59,7 +59,9 @@ public class CCTV : AbstractDevice, ICCTV, ILockable
         if (Status == DeviceStatus.Off)
             return Result.Failure(CCTVErrors.AlreadyOff);
 
+        StopRecording();
         Status = DeviceStatus.Off;
+
         Raise(new DeviceSwitchedOffEvent(Id)); 
         Touch();
 

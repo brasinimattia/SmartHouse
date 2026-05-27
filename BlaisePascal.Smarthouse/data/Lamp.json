@@ -33,10 +33,10 @@
   },
   {
     "Name": "No",
-    "Status": "ON",
-    "Brightness": 27,
+    "Status": "OFF",
+    "Brightness": 50,
     "Id": "49a4f23e-4d30-473f-82d6-e15d710d158b",
     "CreatedAtUtc": "2026-05-27T10:23:31.8250925+02:00",
-    "LastModifiedAtUtc": "2026-05-27T08:23:31.8580323Z"
+    "LastModifiedAtUtc": "2026-05-27T08:35:49.2009658Z"
   }
 ]
