@@ -5,7 +5,7 @@
     "Brightness": 47,
     "Id": "50c056cb-f240-4fbd-83dc-5cb82c5fa7c9",
     "CreatedAtUtc": "2026-04-23T13:31:12.6946085+02:00",
-    "LastModifiedAtUtc": "2026-04-29T10:52:35.5149611+02:00"
+    "LastModifiedAtUtc": "2026-05-27T08:13:51.2036856Z"
   },
   {
     "Name": "Blu",
@@ -13,7 +13,7 @@
     "Brightness": 1,
     "Id": "6100e9f3-a9f8-4807-899f-f9b13a656fe7",
     "CreatedAtUtc": "2026-04-23T13:32:35.5668731+02:00",
-    "LastModifiedAtUtc": "2026-05-26T16:07:57.3337041+02:00"
+    "LastModifiedAtUtc": "2026-05-27T08:13:54.0385538Z"
   },
   {
     "Name": "Verde",
@@ -25,10 +25,18 @@
   },
   {
     "Name": "Yes",
-    "Status": "OFF",
+    "Status": "ON",
     "Brightness": 58,
     "Id": "58ac8cc5-d773-4e09-bcab-7ec97119ad1b",
     "CreatedAtUtc": "2026-04-29T10:53:13.7071051+02:00",
-    "LastModifiedAtUtc": "2026-05-26T16:08:00.251895+02:00"
+    "LastModifiedAtUtc": "2026-05-27T08:08:52.2681672Z"
+  },
+  {
+    "Name": "No",
+    "Status": "ON",
+    "Brightness": 27,
+    "Id": "49a4f23e-4d30-473f-82d6-e15d710d158b",
+    "CreatedAtUtc": "2026-05-27T10:23:31.8250925+02:00",
+    "LastModifiedAtUtc": "2026-05-27T08:23:31.8580323Z"
   }
 ]

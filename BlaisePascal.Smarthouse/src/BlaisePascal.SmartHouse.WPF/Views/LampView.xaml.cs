@@ -94,6 +94,14 @@ namespace BlaisePascal.SmartHouse.WPF.Views
                     return;
                 }
 
+                if (int.TryParse(NewLampIntensityTextBox.Text.Trim(), out int intensity))
+                {
+                    var lamps = await _mediator.Send(new GetAllLampsQuery());
+                    var addedLamp = lamps.Value.Last();
+                    var switchon = await _mediator.Send(new SwitchOnLampCommand(addedLamp.Id));
+                    var changebrightness = await _mediator.Send(new ChangeBrightnessLampCommand(addedLamp.Id, intensity));
+                }
+
 
                 NewLampNameTextBox.Clear();
                 NewLampIntensityTextBox.Clear();

@@ -1,0 +1,13 @@
+[
+  {
+    "Name": "Ciao",
+    "Id": "301de858-fec4-4c53-8f9f-e35fb16c9968",
+    "Status": "On",
+    "LockingStatus": "Unlocked",
+    "DoorStatus": "Closed",
+    "Password": "NoPassword",
+    "PasswordSetted": true,
+    "CreatedAtUtc": "2026-05-27T10:05:51.6540424+02:00",
+    "LastModifiedAtUtc": "2026-05-27T08:05:51.654046Z"
+  }
+]

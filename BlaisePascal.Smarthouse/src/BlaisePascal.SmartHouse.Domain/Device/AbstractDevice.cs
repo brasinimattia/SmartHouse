@@ -77,10 +77,10 @@ namespace BlaisePascal.SmartHouse.Domain.Device
 
         public virtual Result SwitchOff()
         {
-            if (Status == DeviceStatus.On)
+            if (Status == DeviceStatus.Off)
                 return Result.Failure(LampErrors.AlreadyOff);
 
-            Status = DeviceStatus.On;
+            Status = DeviceStatus.Off;
 
             Raise(new DeviceSwitchedOnEvent(Id));
             Touch();
