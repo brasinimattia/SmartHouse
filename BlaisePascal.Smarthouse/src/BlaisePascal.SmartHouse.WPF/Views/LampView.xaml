@@ -97,7 +97,7 @@
                 <StackPanel>
                     <TextBlock Text="Management" FontWeight="Bold" FontSize="20" Margin="0,0,0,20"/>
                     <TextBox x:Name="NewLampNameTextBox" materialDesign:HintAssist.Hint="Device Name" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,0,15"/>
-                    <TextBox x:Name="NewLampIntensityTextBox" materialDesign:HintAssist.Hint="Intensity (0-100)" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,0,20"/>
+                    <TextBox x:Name="NewLampIntensityTextBox" materialDesign:HintAssist.Hint="Intensity (1-100)" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,0,20"/>
                     <Button Content="ADD DEVICE" Click="Add_Click" Background="#5C6BC0" materialDesign:ButtonAssist.CornerRadius="24" Height="48"/>
 
                     <Separator Margin="0,30" Background="#20607D8B"/>
