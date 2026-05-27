@@ -61,7 +61,7 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice
         {
             OnValidator();
             Result result;
-            if (!(DoorStatus == DoorStatus.Closed))
+            if (DoorStatus == DoorStatus.Open)
             {
                 result = Result.Success();
                 DoorStatus = DoorStatus.Closed;
@@ -85,8 +85,8 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice
                 DoorStatus == DoorStatus.Closed &&
                 (noPassword || correctPassword))
             {
-                result = Result.Success();
                 LockingStatus = LockingStatus.Locked;
+                result = Result.Success();
                 Touch();
             }
             else
@@ -109,8 +109,8 @@ namespace BlaisePascal.SmartHouse.Domain.LockableDevices.DoorDevice
             if (LockingStatus == LockingStatus.Locked &&
                 (noPassword || correctPassword))
             {
-                result = Result.Success();
                 LockingStatus = LockingStatus.Unlocked;
+                result = Result.Success();
                 Touch();
             }
             else

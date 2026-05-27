@@ -21,11 +21,12 @@ namespace BlaisePascal.SmartHouse.Application.Devices.Abstraction.Mappers
 
         public static LockingStatus ToDomain(string status)
         {
-            return status switch
+            return status.ToUpperInvariant() switch
             {
                 "UNLOCKED" => LockingStatus.Unlocked,
                 "LOCKED" => LockingStatus.Locked,
-                "UNKNOWN" => LockingStatus.Unknown
+                "UNKNOWN" => LockingStatus.Unknown,
+                _ => throw new ArgumentException($"Invalid status: {status}")
             };
         }
     }

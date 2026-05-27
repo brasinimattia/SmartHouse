@@ -19,6 +19,7 @@ using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Comma
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.OpenDoor;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.RemoveDoor;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.SetPasswordDoor;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.UnlockDoor;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Dto;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Queries;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Queries.GetAllDoor;
@@ -42,7 +43,7 @@ namespace BlaisePascal.SmartHouse.WPF.Views
         {
             InitializeComponent();
             _mediator = mediator;
-            //RefreshDoorList();
+            RefreshDoorList();
         }
 
         private async void RefreshDoorList()
@@ -173,7 +174,7 @@ namespace BlaisePascal.SmartHouse.WPF.Views
             {
                 if (SelectedDoor == null) return;
                 string key = DoorPasswordBox.Password;
-                var result = await _mediator.Send(new LockDoorCommand(SelectedDoor.Id, key));
+                var result = await _mediator.Send(new UnlockDoorCommand(SelectedDoor.Id, key));
 
                 if (result.IsFailure)
                 {

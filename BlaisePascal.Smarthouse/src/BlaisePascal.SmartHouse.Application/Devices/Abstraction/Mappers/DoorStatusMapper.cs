@@ -22,11 +22,12 @@ namespace BlaisePascal.SmartHouse.Application.Devices.Abstraction.Mappers
 
         public static DoorStatus ToDomain(string status)
         {
-            return status switch
+            return status.ToUpperInvariant() switch
             {
                 "OPEN" => DoorStatus.Open,
                 "CLOSED" => DoorStatus.Closed,
-                "UNKNOWN" => DoorStatus.Unknown
+                "UNKNOWN" => DoorStatus.Unknown,
+                _ => throw new ArgumentException($"Invalid status value: {status}")
             };
         }
     }

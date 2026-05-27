@@ -2,12 +2,23 @@
   {
     "Name": "Ciao",
     "Id": "301de858-fec4-4c53-8f9f-e35fb16c9968",
-    "Status": "On",
+    "Status": "Unkwnown",
     "LockingStatus": "Unlocked",
-    "DoorStatus": "Closed",
-    "Password": "NoPassword",
+    "DoorStatus": "Open",
+    "Password": "123456789",
     "PasswordSetted": true,
     "CreatedAtUtc": "2026-05-27T10:05:51.6540424+02:00",
-    "LastModifiedAtUtc": "2026-05-27T08:05:51.654046Z"
+    "LastModifiedAtUtc": "2026-05-27T08:48:46.4779404Z"
+  },
+  {
+    "Name": "Bello",
+    "Id": "025156e2-19a5-4631-b5fd-ed74913b8ba9",
+    "Status": "Unkwnown",
+    "LockingStatus": "Unlocked",
+    "DoorStatus": "Open",
+    "Password": "M06042009b.",
+    "PasswordSetted": true,
+    "CreatedAtUtc": "2026-05-27T10:48:11.5267938+02:00",
+    "LastModifiedAtUtc": "2026-05-27T08:50:23.6151617Z"
   }
 ]
