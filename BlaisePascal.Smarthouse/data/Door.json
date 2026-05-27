@@ -8,17 +8,17 @@
     "Password": "123456789",
     "PasswordSetted": true,
     "CreatedAtUtc": "2026-05-27T10:05:51.6540424+02:00",
-    "LastModifiedAtUtc": "2026-05-27T08:48:46.4779404Z"
+    "LastModifiedAtUtc": "2026-05-27T12:34:51.6656079Z"
   },
   {
     "Name": "Bello",
     "Id": "025156e2-19a5-4631-b5fd-ed74913b8ba9",
     "Status": "Unkwnown",
     "LockingStatus": "Unlocked",
-    "DoorStatus": "Open",
+    "DoorStatus": "Closed",
     "Password": "M06042009b.",
     "PasswordSetted": true,
     "CreatedAtUtc": "2026-05-27T10:48:11.5267938+02:00",
-    "LastModifiedAtUtc": "2026-05-27T08:50:23.6151617Z"
+    "LastModifiedAtUtc": "2026-05-27T12:34:48.5534983Z"
   }
 ]

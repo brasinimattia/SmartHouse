@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace BlaisePascal.SmartHouse.Domain.LockableDevices
 {
     public enum LockingStatus
-    {   
-        Unknown,
-        Locked,
-        Unlocked,
+    {
+        Unlocked = 0,
+        Locked = 1,
+        Unknown = 2
     }
 }

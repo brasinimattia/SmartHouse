@@ -27,7 +27,8 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.C
             var result = door.Close();
             if (result.IsFailure)
                 return Task.FromResult(Result.Failure<Guid>(result.Error));
-            
+
+            _doorRepository.Update(door);
             return Task.FromResult(Result.Success<Guid>(door.Id));
         }
     }

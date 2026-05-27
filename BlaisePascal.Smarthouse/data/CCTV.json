@@ -18,10 +18,10 @@
     "Mode": "NOMODE",
     "LockingStatus": "UNKNOWN",
     "IsRecording": false,
-    "Password": "NoPassword",
+    "Password": "M06042009b.",
     "PasswordSetted": true,
     "CreatedAtUtc": "2026-05-27T10:07:52.4578351+02:00",
-    "LastModifiedAtUtc": "2026-05-27T08:29:33.1371084Z"
+    "LastModifiedAtUtc": "2026-05-27T12:57:14.7471959Z"
   },
   {
     "Name": "Bello",
@@ -30,9 +30,9 @@
     "Mode": "NOMODE",
     "LockingStatus": "UNKNOWN",
     "IsRecording": false,
-    "Password": "NoPassword",
+    "Password": "M06042009b.",
     "PasswordSetted": true,
     "CreatedAtUtc": "2026-05-27T10:14:08.0329609+02:00",
-    "LastModifiedAtUtc": "2026-05-27T08:29:44.6954971Z"
+    "LastModifiedAtUtc": "2026-05-27T12:47:58.1742079Z"
   }
 ]

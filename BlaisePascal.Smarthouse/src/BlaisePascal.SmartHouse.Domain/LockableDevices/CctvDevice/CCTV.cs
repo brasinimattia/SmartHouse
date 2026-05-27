@@ -126,33 +126,40 @@ public class CCTV : AbstractDevice, ICCTV, ILockable
     {
         OnValidator();
 
-        bool noPassword = !PasswordSetted;
-        bool correctPassword = PasswordSetted && Password.Key == key;
-
-        if (LockingStatus == LockingStatus.Locked && (noPassword || correctPassword))
+        if (LockingStatus != LockingStatus.Locked)
         {
-            LockingStatus = LockingStatus.Unlocked;
-            Touch();
-            return Result.Success();
+            return Result.Failure(CCTVErrors.CannotUnlock);
         }
 
-        return Result.Failure(CCTVErrors.CannotUnlock);
+        if (PasswordSetted && Password.Key != key)
+        {
+            return Result.Failure(CCTVErrors.CannotUnlock);
+        }
+
+        LockingStatus = LockingStatus.Unlocked;
+        Touch();
+
+        return Result.Success();
     }
 
     public Result Lock(string key)
     {
         OnValidator();
 
-        bool noPassword = !PasswordSetted;
-        bool correctPassword = PasswordSetted && Password.Key == key;
-
-        if (LockingStatus == LockingStatus.Unlocked && (noPassword || correctPassword))
+        if (LockingStatus != LockingStatus.Unlocked)
         {
-            LockingStatus = LockingStatus.Locked;
-            Touch();
-            return Result.Success();
+            return Result.Failure(CCTVErrors.CannotLock);
         }
 
-        return Result.Failure(CCTVErrors.CannotLock);
+
+        if (!string.IsNullOrEmpty(key))
+        {
+            SetPassword(key);
+        }
+
+        LockingStatus = LockingStatus.Locked;
+        Touch();
+
+        return Result.Success();
     }
 }
