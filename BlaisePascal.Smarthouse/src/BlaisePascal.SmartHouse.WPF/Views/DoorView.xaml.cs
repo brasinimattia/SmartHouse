@@ -19,6 +19,8 @@ using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Comma
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.OpenDoor;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.RemoveDoor;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.SetPasswordDoor;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.SwitchOffDoor;
+using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.SwitchOnDoor;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Command.UnlockDoor;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Dto;
 using BlaisePascal.SmartHouse.Application.Devices.LockableDevices.DoorUses.Queries;
@@ -233,6 +235,45 @@ namespace BlaisePascal.SmartHouse.WPF.Views
                     return;
                 }
                 SelectedDoor = null;
+                RefreshDoorList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void On_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SelectedDoor == null) return;
+                var result = await _mediator.Send(new SwitchOnDoorCommand(SelectedDoor.Id));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in turning on door");
+                    return;
+                }
+                RefreshDoorList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+        }
+
+        private async void Off_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SelectedDoor == null) return;
+                var result = await _mediator.Send(new SwitchOffDoorCommand(SelectedDoor.Id));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show(result.Error.Code, "Error in turning off door");
+                    return;
+                }
                 RefreshDoorList();
             }
             catch (Exception ex)

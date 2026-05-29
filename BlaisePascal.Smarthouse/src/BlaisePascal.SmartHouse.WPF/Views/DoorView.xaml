@@ -20,7 +20,6 @@
                 <ColumnDefinition Width="400" />
             </Grid.ColumnDefinitions>
 
-            <!-- LISTA PORTE (Sinistra) -->
             <DockPanel Grid.Column="0">
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10,0,0,30">
                     <materialDesign:PackIcon Kind="Door" Width="35" Height="35" VerticalAlignment="Center" Foreground="#5C6BC0"/>
@@ -37,27 +36,28 @@
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Border Width="220" Height="160" Margin="10" Padding="20" CornerRadius="24" BorderThickness="2">
+                                <Border Width="220" Height="170" Margin="10" Padding="15" CornerRadius="24" BorderThickness="2">
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Setter Property="Background" Value="#A6FFFFFF"/>
                                             <Setter Property="BorderBrush" Value="#E6FFFFFF"/>
                                             <Style.Triggers>
-                                                <!-- Effetto se la porta è bloccata -->
                                                 <DataTrigger Binding="{Binding LockingStatus}" Value="Locked">
                                                     <Setter Property="BorderBrush" Value="#D32F2F" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Border.Style>
+
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
 
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal">
                                             <materialDesign:PackIcon Kind="{Binding DoorStatus, Converter={StaticResource DoorIconConverter}}" Width="28" Height="28" Foreground="#5C6BC0"/>
                                             <materialDesign:PackIcon Kind="Lock" Width="20" Height="20" Margin="5,0,0,0" 
                                                                      Visibility="{Binding LockingStatus, Converter={StaticResource VisibilityConverter}}" Foreground="#D32F2F"/>
@@ -65,7 +65,12 @@
 
                                         <TextBlock Grid.Row="1" Text="{Binding Name}" FontSize="20" FontWeight="SemiBold" Foreground="#37474F" VerticalAlignment="Center"/>
 
-                                        <TextBlock Grid.Row="2" Text="{Binding DoorStatus}" FontSize="12" FontWeight="Bold" Foreground="#607D8B"/>
+                                        <TextBlock Grid.Row="2" Text="{Binding DoorStatus}" FontSize="12" FontWeight="Bold" Foreground="#607D8B" Margin="0,0,0,4"/>
+
+                                        <StackPanel Grid.Row="3" Orientation="Horizontal">
+                                            <TextBlock Text="Status: " FontSize="12" FontWeight="Bold" Foreground="#546E7A"/>
+                                            <TextBlock Text="{Binding IsOn}" FontSize="12" FontWeight="Black" Foreground="#2E7D32"/>
+                                        </StackPanel>
                                     </Grid>
                                 </Border>
                             </DataTemplate>
@@ -74,39 +79,47 @@
                 </ScrollViewer>
             </DockPanel>
 
-            <!-- GESTIONE (Destra) -->
             <Border Grid.Column="1" Background="#A6FFFFFF" CornerRadius="28" Padding="30" Margin="15,0,0,0">
-                <StackPanel>
-                    <TextBlock Text="Management" FontWeight="Bold" FontSize="20" Margin="0,0,0,20"/>
-                    
-                   
-                    <TextBox x:Name="NewDoorNameTextBox" materialDesign:HintAssist.Hint="Door Name" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,0,15"/>
-                    <Button Content="ADD DOOR" Click="AddDoor_Click" Background="#5C6BC0" materialDesign:ButtonAssist.CornerRadius="24" Height="48"/>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock Text="Management" FontWeight="Bold" FontSize="20" Margin="0,0,20,20"/>
 
-                    <Separator Margin="0,30" Background="#20607D8B"/>
+                        <TextBox x:Name="NewDoorNameTextBox" materialDesign:HintAssist.Hint="Door Name" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,0,15"/>
+                        <Button Content="ADD DOOR" Click="AddDoor_Click" Background="#5C6BC0" materialDesign:ButtonAssist.CornerRadius="24" Height="48"/>
 
-                    <!-- Controlli Apertura -->
-                    <UniformGrid Columns="2" Margin="0,0,0,15">
-                        <Button Content="OPEN" Click="Open_Click" Margin="0,0,5,0" Background="#5C6BC0"/>
-                        <Button Content="CLOSE" Click="Close_Click" Margin="5,0,0,0" Style="{StaticResource MaterialDesignOutlinedButton}"/>
-                    </UniformGrid>
+                        <Separator Margin="0,25" Background="#20607D8B"/>
 
-                    <Separator Margin="0,15" Background="#10607D8B"/>
+                        <TextBlock Text="Power System" FontWeight="SemiBold" FontSize="14" Foreground="#37474F" Margin="0,0,0,10"/>
+                        <UniformGrid Columns="2" Margin="0,0,0,15">
+                            <Button Content="ON" Click="On_Click" Margin="0,0,5,0" Background="#4CAF50" BorderBrush="#4CAF50"/>
+                            <Button Content="OFF" Click="Off_Click" Margin="5,0,0,0" Background="#F44336" BorderBrush="#F44336"/>
+                        </UniformGrid>
 
-                    <!-- Controlli Sicurezza -->
-                    <PasswordBox x:Name="DoorPasswordBox" materialDesign:HintAssist.Hint="Security Key" Style="{StaticResource MaterialDesignOutlinedPasswordBox}" Margin="0,0,0,15"/>
-                    
-                    <UniformGrid Columns="2" Margin="0,0,0,10">
-                        <Button Content="LOCK" Click="Lock_Click" Margin="0,0,5,0" Background="#37474F"/>
-                        <Button Content="UNLOCK" Click="Unlock_Click" Margin="5,0,0,0" Background="#78909C"/>
-                    </UniformGrid>
+                        <Separator Margin="0,15" Background="#10607D8B"/>
 
-                    <Button Content="SET NEW PASSWORD" Click="SetPassword_Click" Style="{StaticResource MaterialDesignFlatMidBgButton}" Margin="0,10"/>
-                    
-                    <Button Click="Remove_Click" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#D32F2F" BorderBrush="#FFCDD2" Margin="0,20,0,0">
-                        <materialDesign:PackIcon Kind="Delete"/>
-                    </Button>
-                </StackPanel>
+                        <TextBlock Text="Position" FontWeight="SemiBold" FontSize="14" Foreground="#37474F" Margin="0,0,0,10"/>
+                        <UniformGrid Columns="2" Margin="0,0,0,15">
+                            <Button Content="OPEN" Click="Open_Click" Margin="0,0,5,0" Background="#5C6BC0"/>
+                            <Button Content="CLOSE" Click="Close_Click" Margin="5,0,0,0" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                        </UniformGrid>
+
+                        <Separator Margin="0,15" Background="#10607D8B"/>
+
+                        <TextBlock Text="Security" FontWeight="SemiBold" FontSize="14" Foreground="#37474F" Margin="0,0,0,10"/>
+                        <PasswordBox x:Name="DoorPasswordBox" materialDesign:HintAssist.Hint="Security Key" Style="{StaticResource MaterialDesignOutlinedPasswordBox}" Margin="0,0,0,15"/>
+
+                        <UniformGrid Columns="2" Margin="0,0,0,10">
+                            <Button Content="LOCK" Click="Lock_Click" Margin="0,0,5,0" Background="#37474F"/>
+                            <Button Content="UNLOCK" Click="Unlock_Click" Margin="5,0,0,0" Background="#78909C"/>
+                        </UniformGrid>
+
+                        <Button Content="SET NEW PASSWORD" Click="SetPassword_Click" Style="{StaticResource MaterialDesignFlatMidBgButton}" Margin="0,10"/>
+
+                        <Button Click="Remove_Click" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#D32F2F" BorderBrush="#FFCDD2" Margin="0,20,0,0">
+                            <materialDesign:PackIcon Kind="Delete"/>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
             </Border>
         </Grid>
     </Grid>
